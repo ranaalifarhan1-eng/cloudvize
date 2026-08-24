@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO & Content Authority Services | CloudVize USA</title>
+    <meta name="description" content="Dominate search results with CloudVize's data-driven SEO & Content strategies. We build topical authority, technical excellence, and high-quality backlinks for US brands.">
+    <meta name="keywords" content="SEO Agency USA, Technical SEO, Content Marketing Strategy, Link Building Services, Local SEO, E-commerce SEO, SaaS SEO">
+    
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Manrope', 'sans-serif'],
+                    },
+                    colors: {
+                        accent: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            200: '#ddd6fe',
+                            300: '#c4b5fd',
+                            400: '#a78bfa',
+                            500: '#8b5cf6',
+                            600: '#7c3aed', // Primary Purple
+                            700: '#6d28d9',
+                            800: '#5b21b6',
+                            900: '#4c1d95',
+                            950: '#2e1065',
+                        },
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748B',
+                            600: '#475569',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                            950: '#020617',
+                        }
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #f1f5f9 1px, transparent 1px), linear-gradient(to bottom, #f1f5f9 1px, transparent 1px)",
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'blob': 'blob 7s infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #F8FAFC; 
+            color: #1E293B; 
+            overflow-x: hidden; 
+        }
+        h1, h2, h3, h4, h5 { font-family: 'Manrope', sans-serif; }
+        
+        /* Glass Effect */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+        }
+        .glass-panel-dark {
+             background: rgba(15, 23, 42, 0.6);
+             backdrop-filter: blur(20px);
+             border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Utils */
+        .reveal-hidden { opacity: 0; transform: translateY(30px); filter: blur(4px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .reveal-visible { opacity: 1; transform: translateY(0); filter: blur(0); }
+        .text-gradient { background: linear-gradient(135deg, #0F172A 0%, #7C3AED 50%, #4F46E5 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .feature-list li {
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        .feature-list li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: #7C3AED;
+        }
+    </style>
+    <link rel="icon" type="image/png" href="images/favicon.png">
+</head>
+<body class="antialiased">
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        // --- Shared Components ---
+        const useOnScreen = (options) => {
+            const ref = useRef(null);
+            const [visible, setVisible] = useState(false);
+            useEffect(() => {
+                const observer = new IntersectionObserver(([entry]) => {
+                    if (entry.isIntersecting) { setVisible(true); observer.unobserve(entry.target); }
+                }, options);
+                if (ref.current) observer.observe(ref.current);
+                return () => { if (ref.current) observer.unobserve(ref.current); };
+            }, [ref, options]);
+            return [ref, visible];
+        };
+
+        const ScrollReveal = ({ children, delay = 0, className = "" }) => {
+            const [ref, visible] = useOnScreen({ threshold: 0.1 });
+            return (
+                <div ref={ref} className={`reveal-hidden ${visible ? 'reveal-visible' : ''} ${className}`} style={{ transitionDelay: `${delay}ms` }}>
+                    {children}
+                </div>
+            );
+        };
+
+        // --- Icons ---
+        const Icon = ({ path, className, size = 24, strokeWidth = 2 }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" className={className}>{path}</svg>
+        );
+        const ArrowRight = (props) => <Icon {...props} path={<><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></>} />;
+        const ChevronDown = (props) => <Icon {...props} path={<><polyline points="6 9 12 15 18 9"></polyline></>} />;
+        const MapPin = (props) => <Icon {...props} path={<><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></>} />;
+        const Mail = (props) => <Icon {...props} path={<><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></>} />;
+        const Smartphone = (props) => <Icon {...props} path={<><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></>} />;
+        const Check = (props) => <Icon {...props} path={<><polyline points="20 6 9 17 4 12"></polyline></>} />;
+        const Target = (props) => <Icon {...props} path={<><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></>} />;
+        const Search = (props) => <Icon {...props} path={<><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></>} />;
+        const BarChart = (props) => <Icon {...props} path={<><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></>} />;
+        const FileText = (props) => <Icon {...props} path={<><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></>} />;
+        const LinkIcon = (props) => <Icon {...props} path={<><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></>} />;
+        const Settings = (props) => <Icon {...props} path={<><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1 0-2.83 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></>} />;
+        const Code = (props) => <Icon {...props} path={<><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></>} />;
+        const PenTool = (props) => <Icon {...props} path={<><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></>} />;
+        const PieChart = (props) => <Icon {...props} path={<><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></>} />;
+        const Globe = (props) => <Icon {...props} path={<><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></>} />;
+        const Anchor = (props) => <Icon {...props} path={<><circle cx="12" cy="5" r="3"></circle><line x1="12" y1="22" x2="12" y2="8"></line><path d="M5 12H2a10 10 0 0 0 20 0h-3"></path></>} />;
+        const TrendingUp = (props) => <Icon {...props} path={<><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></>} />;
+        const Users = (props) => <Icon {...props} path={<><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></>} />;
+        const Layers = (props) => <Icon {...props} path={<><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></>} />;
+        const ShoppingBag = (props) => <Icon {...props} path={<><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></>} />;
+        const Activity = (props) => <Icon {...props} path={<><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></>} />;
+        const Zap = (props) => <Icon {...props} path={<><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></>} />;
+        const MousePointer = (props) => <Icon {...props} path={<><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"></path><path d="M13 13l6 6"></path></>} />;
+
+        // --- Cursor Particles (Reused & Adjusted color for SEO theme) ---
+        const CursorParticles = () => {
+            const canvasRef = useRef(null);
+            useEffect(() => {
+                const canvas = canvasRef.current;
+                const ctx = canvas.getContext('2d');
+                let animationFrameId;
+                let particles = [];
+                let mouse = { x: null, y: null };
+
+                const resizeCanvas = () => {
+                    canvas.width = canvas.parentElement.offsetWidth;
+                    canvas.height = canvas.parentElement.offsetHeight;
+                };
+                window.addEventListener('resize', resizeCanvas);
+                resizeCanvas();
+
+                class Particle {
+                    constructor() {
+                        this.x = Math.random() * canvas.width;
+                        this.y = Math.random() * canvas.height;
+                        this.vx = (Math.random() - 0.5) * 0.8;
+                        this.vy = (Math.random() - 0.5) * 0.8;
+                        this.size = Math.random() * 3 + 2;
+                        this.color = 'rgba(124, 58, 237, '; // Default Purple
+                    }
+                    update() {
+                        this.x += this.vx; this.y += this.vy;
+                        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+                        if (mouse.x != null) {
+                            let dx = mouse.x - this.x; let dy = mouse.y - this.y;
+                            let distance = Math.sqrt(dx * dx + dy * dy);
+                            if (distance < 150) {
+                                const force = (150 - distance) / 150;
+                                this.vx += (dx / distance) * force * 0.8;
+                                this.vy += (dy / distance) * force * 0.8;
+                            }
+                        }
+                    }
+                    draw() {
+                        ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.fillStyle = this.color + '0.6)'; ctx.fill();
+                    }
+                }
+
+                const initParticles = () => { particles = []; for (let i = 0; i < 40; i++) particles.push(new Particle()); };
+                initParticles();
+
+                const animate = () => {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    particles.forEach(p => {
+                        p.update(); p.draw();
+                        if (mouse.x != null) {
+                            let dx = mouse.x - p.x; let dy = mouse.y - p.y;
+                            let distance = Math.sqrt(dx*dx + dy*dy);
+                            if (distance < 150) {
+                                ctx.beginPath(); ctx.strokeStyle = `rgba(124, 58, 237, ${0.5 - distance/300})`;
+                                ctx.lineWidth = 1.5; ctx.moveTo(p.x, p.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
+                            }
+                        }
+                    });
+                    animationFrameId = requestAnimationFrame(animate);
+                };
+                animate();
+
+                const handleMouseMove = (e) => {
+                    const rect = canvas.getBoundingClientRect();
+                    mouse.x = e.clientX - rect.left; mouse.y = e.clientY - rect.top;
+                };
+                const handleMouseLeave = () => { mouse.x = null; mouse.y = null; };
+
+                canvas.parentElement.addEventListener('mousemove', handleMouseMove);
+                canvas.parentElement.addEventListener('mouseleave', handleMouseLeave);
+                return () => {
+                    window.removeEventListener('resize', resizeCanvas);
+                    canvas.parentElement.removeEventListener('mousemove', handleMouseMove);
+                    canvas.parentElement.removeEventListener('mouseleave', handleMouseLeave);
+                    cancelAnimationFrame(animationFrameId);
+                };
+            }, []);
+            return <canvas ref={canvasRef} className="absolute inset-0 z-0 pointer-events-none" />;
+        };
+
+        const ServiceCard = ({ name, desc, features, color, icon: Icon, delay }) => (
+            <ScrollReveal delay={delay} className="h-full">
+                <div className="group h-full bg-white border border-slate-200 rounded-[2.5rem] p-8 hover:border-accent-300 hover:shadow-2xl hover:shadow-accent-500/10 transition-all duration-500 flex flex-col relative overflow-hidden">
+                    <div className={`absolute -right-12 -top-12 w-48 h-48 bg-${color}-50 rounded-full opacity-50 group-hover:scale-125 transition-transform duration-700`}></div>
+                    
+                    <div className={`w-16 h-16 rounded-2xl bg-${color}-50 flex items-center justify-center text-${color}-600 mb-6 relative z-10 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3 shadow-sm`}>
+                        <Icon size={32} />
+                    </div>
+                    
+                    <h3 className="text-2xl font-bold text-slate-900 mb-3 relative z-10">{name}</h3>
+                    <p className="text-slate-500 mb-8 leading-relaxed relative z-10">{desc}</p>
+                    
+                    <ul className="space-y-4 relative z-10 mt-auto">
+                        {features.map((feature, i) => (
+                            <li key={i} className="flex items-start gap-3 text-sm font-medium text-slate-700">
+                                <div className={`mt-0.5 w-5 h-5 rounded-full bg-${color}-100 flex items-center justify-center text-${color}-600 shrink-0`}>
+                                    <Check size={12} strokeWidth={4} />
+                                </div>
+                                {feature}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </ScrollReveal>
+        );
+
+        const PlatformCard = ({ name, desc, features, color, icon: Icon, delay }) => (
+            <ScrollReveal delay={delay} className="h-full">
+                <div className="group h-full bg-white border border-slate-200 rounded-[2.5rem] p-8 hover:border-accent-300 hover:shadow-2xl hover:shadow-accent-500/10 transition-all duration-500 flex flex-col relative overflow-hidden">
+                    <div className={`absolute -right-12 -top-12 w-48 h-48 bg-${color}-50 rounded-full opacity-50 group-hover:scale-125 transition-transform duration-700`}></div>
+                    
+                    <div className={`w-16 h-16 rounded-2xl bg-${color}-50 flex items-center justify-center text-${color}-600 mb-6 relative z-10 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3 shadow-sm`}>
+                        <Icon size={32} />
+                    </div>
+                    
+                    <h3 className="text-2xl font-bold text-slate-900 mb-3 relative z-10">{name}</h3>
+                    <p className="text-slate-500 mb-8 leading-relaxed relative z-10">{desc}</p>
+                    
+                    <ul className="space-y-4 relative z-10 mt-auto">
+                        {features.map((feature, i) => (
+                            <li key={i} className="flex items-start gap-3 text-sm font-medium text-slate-700">
+                                <div className={`mt-0.5 w-5 h-5 rounded-full bg-${color}-100 flex items-center justify-center text-${color}-600 shrink-0`}>
+                                    <Check size={12} strokeWidth={4} />
+                                </div>
+                                {feature}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </ScrollReveal>
+        );
+
+        const ProcessStep = ({ number, title, desc, delay }) => (
+            <ScrollReveal delay={delay} className="relative pl-8 pb-12 border-l-2 border-slate-100 last:border-0 last:pb-0">
+                <div className="absolute -left-[17px] top-0 w-8 h-8 rounded-full bg-white border-4 border-accent-100 flex items-center justify-center">
+                    <div className="w-2.5 h-2.5 rounded-full bg-accent-600"></div>
+                </div>
+                <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-lg transition-all duration-300">
+                    <span className="text-xs font-bold text-accent-600 uppercase tracking-widest mb-2 block">Step {number}</span>
+                    <h4 className="text-xl font-bold text-slate-900 mb-2">{title}</h4>
+                    <p className="text-slate-500 text-sm leading-relaxed">{desc}</p>
+                </div>
+            </ScrollReveal>
+        );
+
+        const TechStackItem = ({ icon: Icon, name }) => (
+            <div className="flex items-center gap-3 bg-white px-5 py-3 rounded-xl border border-slate-100 shadow-sm hover:border-accent-200 transition-colors">
+                <div className="text-accent-500"><Icon size={20} /></div>
+                <span className="font-semibold text-slate-700">{name}</span>
+            </div>
+        );
+
+        const FaqItem = ({ q, a, isOpen, toggle }) => (
+            <div className={`border border-slate-200 rounded-2xl transition-all duration-300 ${isOpen ? 'bg-slate-50 border-accent-200' : 'bg-white'}`}>
+                <button onClick={toggle} className="w-full px-6 py-5 text-left flex justify-between items-center hover:text-accent-600 transition-colors">
+                    <span className="font-bold text-slate-900 text-lg">{q}</span>
+                    <ChevronDown size={20} className={`transform transition-transform duration-300 ${isOpen ? 'rotate-180 text-accent-600' : 'text-slate-400'}`} />
+                </button>
+                <div className={`overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+                    <div className="px-6 pb-6 text-slate-600 leading-relaxed border-t border-slate-100 pt-4">
+                        {a}
+                    </div>
+                </div>
+            </div>
+        );
+
+        const App = () => {
+            const [scrolled, setScrolled] = useState(false);
+            const [openFaqIndex, setOpenFaqIndex] = useState(null);
+            const [servicesOpen, setServicesOpen] = useState(false);
+            const [formData, setFormData] = useState({
+                firstName: '',
+                lastName: '',
+                email: '',
+                website: '',
+                message: ''
+            });
+
+            useEffect(() => {
+                const onScroll = () => setScrolled(window.scrollY > 50);
+                window.addEventListener('scroll', onScroll);
+                return () => window.removeEventListener('scroll', onScroll);
+            }, []);
+
+            const handleChange = (e) => {
+                setFormData({ ...formData, [e.target.name]: e.target.value });
+            };
+
+            const handleSubmit = (e) => {
+                e.preventDefault();
+                alert("Thank you! We will audit your website and get back to you.");
+            };
+
+            return (
+                <div className="min-h-screen bg-slate-50 text-slate-600 font-sans selection:bg-accent-500 selection:text-white">
+                    {/* Navigation */}
+                    <nav className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? 'bg-white/90 backdrop-blur-xl border-b border-slate-200 py-4 shadow-sm' : 'bg-transparent border-transparent py-6'}`}>
+                        <div className="container mx-auto px-6 flex items-center justify-between">
+                            <a href="index.html" className="flex items-center gap-3 group cursor-pointer">
+                                <div className="relative">
+                                    <img src="images/cloudvize logo transparent.png" alt="CloudVize Logo" className="relative h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-sm" />
+                                </div>
+                            </a>
+                            
+                            <div className="hidden md:flex items-center gap-10">
+                                <a href="index.html" className="text-sm font-semibold text-slate-600 hover:text-accent-600 transition-colors">Home</a>
+                                
+                                {/* Services Dropdown */}
+                                <div 
+                                    className="relative group h-10 flex items-center"
+                                    onMouseEnter={() => setServicesOpen(true)}
+                                    onMouseLeave={() => setServicesOpen(false)}
+                                >
+                                    <a href="services.html" className="flex items-center gap-1.5 text-sm font-semibold text-slate-600 hover:text-accent-600 transition-colors">
+                                        Services <ChevronDown size={14} className={`transition-transform duration-300 ${servicesOpen ? 'rotate-180' : ''}`} />
+                                    </a>
+                                    
+                                    <div className={`absolute top-full -left-4 w-72 pt-4 transition-all duration-300 transform origin-top-left ${servicesOpen ? 'opacity-100 translate-y-0 visible scale-100' : 'opacity-0 translate-y-2 invisible scale-95'}`}>
+                                        <div className="glass-panel rounded-2xl p-2 shadow-2xl overflow-hidden bg-white/90 ring-1 ring-slate-900/5">
+                                            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-4 py-3 border-b border-slate-100">Our Expertise</div>
+                                            <div className="p-1">
+                                            {[
+                                                { label: "Paid Advertising", icon: Target, href: "paid-advertising.html" },
+                                                { label: "SEO & Content", icon: Search, href: "seo-content.html", active: true },
+                                                { label: "Web Development", icon: Code, href: "web-development.html" },
+                                                { label: "Creative Studio", icon: PenTool, href: "creative-studio.html" },
+                                                { label: "Email Marketing", icon: Mail, href: "email-marketing.html" },
+                                                { label: "CRO & Analytics", icon: PieChart, href: "cro-analytics.html" }
+                                            ].map((item, i) => (
+                                                <a key={i} href={item.href} className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all group/item ${item.active ? 'bg-accent-50 text-accent-700' : 'hover:bg-slate-50 text-slate-600 hover:text-accent-600'}`}>
+                                                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors shadow-sm ${item.active ? 'bg-white text-accent-600' : 'bg-slate-50 text-slate-500 group-hover/item:text-accent-600 group-hover/item:bg-accent-50'}`}>
+                                                        <item.icon size={16} />
+                                                    </div>
+                                                    {item.label}
+                                                </a>
+                                            ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <a href="about.html" className="text-sm font-semibold text-slate-600 hover:text-accent-600 transition-colors">About Us</a>
+                                <a href="contact.html" className="text-sm font-semibold text-slate-600 hover:text-accent-600 transition-colors">Contact</a>
+                            </div>
+                            
+                            <button onClick={() => document.getElementById('footer-form').scrollIntoView({ behavior: 'smooth' })} className="hidden sm:flex items-center gap-2 bg-slate-900 text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-accent-600 transition-all shadow-lg shadow-slate-900/20 hover:shadow-accent-500/30 hover:scale-105 active:scale-95">
+                                Get Growth Plan <ArrowRight size={16} />
+                            </button>
+                        </div>
+                    </nav>
+
+                    {/* Hero Section */}
+                    <section className="relative pt-44 pb-24 overflow-hidden bg-white">
+                        <CursorParticles />
+                        <div className="absolute top-0 -left-4 w-96 h-96 bg-accent-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+                        <div className="absolute top-0 -right-4 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+                        <div className="absolute inset-0 z-0 opacity-50">
+                            <img src="images/herobanner1.png" alt="Hero Background" className="w-full h-full object-cover" />
+                            <div className="absolute inset-0 bg-gradient-to-b from-white via-white/80 to-slate-50"></div>
+                        </div>
+                        
+                        <div className="container mx-auto px-6 relative z-10 text-center">
+                            <ScrollReveal>
+                                <div className="inline-flex items-center gap-2 border border-accent-200 bg-accent-50/50 px-5 py-2 rounded-full mb-8 backdrop-blur-md shadow-sm">
+                                    <span className="relative flex h-2.5 w-2.5">
+                                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-400 opacity-75"></span>
+                                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent-500"></span>
+                                    </span>
+                                    <span className="text-xs font-bold text-accent-700 uppercase tracking-widest">Dominating Google Search</span>
+                                </div>
+                                <h1 className="text-5xl md:text-7xl font-display font-bold text-slate-900 mb-8 tracking-tight">
+                                    Dominate Search. <br/> <span className="text-gradient">Command Authority.</span>
+                                </h1>
+                                <p className="text-xl text-slate-500 max-w-3xl mx-auto mb-12 font-light leading-relaxed">
+                                    We don't just rank for keywords. We build topical authority that positions your brand as the industry leader, driving sustainable, high-intent organic traffic.
+                                </p>
+                            </ScrollReveal>
+                        </div>
+                    </section>
+
+                    {/* NEW: The Organic Engine */}
+                    <section className="py-24 bg-white relative">
+                        <div className="container mx-auto px-6">
+                            <div className="text-center mb-16">
+                                <ScrollReveal>
+                                    <h2 className="text-3xl md:text-5xl font-display font-bold text-slate-900 mb-6">The Organic Engine</h2>
+                                    <p className="text-slate-500 max-w-2xl mx-auto">SEO isn't magic. It's a system of technical perfection, content depth, and authoritative signals.</p>
+                                </ScrollReveal>
+                            </div>
+                            
+                            <div className="grid md:grid-cols-3 gap-8">
+                                <ScrollReveal delay={0}>
+                                    <div className="p-8 bg-slate-50 rounded-3xl border border-slate-100 text-center h-full hover:border-accent-200 transition-all">
+                                        <div className="w-16 h-16 mx-auto bg-accent-100 text-accent-600 rounded-full flex items-center justify-center mb-6">
+                                            <Settings size={32} />
+                                        </div>
+                                        <h3 className="text-xl font-bold text-slate-900 mb-4">Technical Foundation</h3>
+                                        <p className="text-slate-600 mb-6 text-sm">Site Health & Performance</p>
+                                        <ul className="text-left space-y-3 text-sm text-slate-600">
+                                            <li className="flex gap-2"><Check size={16} className="text-accent-600"/> Core Web Vitals Optimization</li>
+                                            <li className="flex gap-2"><Check size={16} className="text-accent-600"/> Schema Markup & Rich Snippets</li>
+                                            <li className="flex gap-2"><Check size={16} className="text-accent-600"/> Mobile-First Architecture</li>
+                                        </ul>
+                                    </div>
+                                </ScrollReveal>
+                                <ScrollReveal delay={150}>
+                                    <div className="p-8 bg-white shadow-xl shadow-accent-100/50 rounded-3xl border border-accent-200 text-center h-full transform scale-105 z-10 relative">
+                                        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-accent-600 text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest">Growth Driver</div>
+                                        <div className="w-16 h-16 mx-auto bg-accent-100 text-accent-600 rounded-full flex items-center justify-center mb-6">
+                                            <FileText size={32} />
+                                        </div>
+                                        <h3 className="text-xl font-bold text-slate-900 mb-4">Content Clusters</h3>
+                                        <p className="text-slate-600 mb-6 text-sm">Topical Authority & E-E-A-T</p>
+                                        <ul className="text-left space-y-3 text-sm text-slate-600">
+                                            <li className="flex gap-2"><Check size={16} className="text-accent-600"/> Keyword Gap Analysis</li>
+                                            <li className="flex gap-2"><Check size={16} className="text-accent-600"/> Pillar Page Strategy</li>
+                                            <li className="flex gap-2"><Check size={16} className="text-accent-600"/> Editorial Quality Control</li>
+                                        </ul>
+                                    </div>
+                                </ScrollReveal>
+                                <ScrollReveal delay={300}>
+                                    <div className="p-8 bg-slate-50 rounded-3xl border border-slate-100 text-center h-full hover:border-accent-200 transition-all">
+                                        <div className="w-16 h-16 mx-auto bg-accent-100 text-accent-600 rounded-full flex items-center justify-center mb-6">
+                                            <LinkIcon size={32} />
+                                        </div>
+                                        <h3 className="text-xl font-bold text-slate-900 mb-4">Authority Building</h3>
+                                        <p className="text-slate-600 mb-6 text-sm">High-Quality Backlinks</p>
+                                        <ul className="text-left space-y-3 text-sm text-slate-600">
+                                            <li className="flex gap-2"><Check size={16} className="text-accent-600"/> Digital PR Outreach</li>
+                                            <li className="flex gap-2"><Check size={16} className="text-accent-600"/> Guest Posting (DR 50+)</li>
+                                            <li className="flex gap-2"><Check size={16} className="text-accent-600"/> Toxic Link Disavowals</li>
+                                        </ul>
+                                    </div>
+                                </ScrollReveal>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Industries We Serve */}
+                    <section className="py-24 bg-slate-50 border-y border-slate-200">
+                        <div className="container mx-auto px-6">
+                            <div className="text-center mb-16">
+                                <ScrollReveal>
+                                    <h2 className="text-3xl md:text-5xl font-display font-bold text-slate-900 mb-6">Tailored for Scale</h2>
+                                    <p className="text-slate-500 max-w-2xl mx-auto">Different business models require distinct SEO roadmaps.</p>
+                                </ScrollReveal>
+                            </div>
+
+                            <div className="grid md:grid-cols-3 gap-8">
+                                <PlatformCard 
+                                    name="SaaS & Tech"
+                                    color="accent"
+                                    icon={Layers}
+                                    desc="We target high-intent 'solution aware' keywords (e.g., 'best CRM for real estate') to drive qualified demos and trials, reducing your reliance on paid ads."
+                                    features={["Comparison Pages", "Feature Deep Dives", "Documentation SEO", "Technical Audits"]}
+                                    delay={0}
+                                />
+                                <PlatformCard 
+                                    name="Local Business"
+                                    color="accent"
+                                    icon={MapPin}
+                                    desc="Dominate the Map Pack. We optimize your Google Business Profile, build consistent NAP citations, and create hyper-local service pages to capture nearby demand."
+                                    features={["GMB Optimization", "Review Management", "Local Citations", "City-Specific Pages"]}
+                                    delay={100}
+                                />
+                                <PlatformCard 
+                                    name="E-Commerce"
+                                    color="accent"
+                                    icon={ShoppingBag}
+                                    desc="Capture shoppers ready to buy. We optimize product and collection pages for long-tail keywords, ensuring your products appear when purchase intent is highest."
+                                    features={["Product Schema", "Category Optimization", "Blog-to-Product Funnels", "Site Structure"]}
+                                    delay={200}
+                                />
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Process & Tech Stack */}
+                    <section className="py-24 bg-white overflow-hidden">
+                        <div className="container mx-auto px-6">
+                            <div className="flex flex-col lg:flex-row gap-20">
+                                <div className="lg:w-1/2">
+                                    <ScrollReveal>
+                                        <h3 className="text-3xl font-bold text-slate-900 mb-6">Our Methodology</h3>
+                                        <div className="space-y-2">
+                                            <ProcessStep 
+                                                number="01" 
+                                                title="Comprehensive Audit" 
+                                                desc="We crawl your entire site to identify broken links, slow pages, and indexation issues that are holding you back from ranking."
+                                                delay={0}
+                                            />
+                                            <ProcessStep 
+                                                number="02" 
+                                                title="Competitor Reverse Engineering" 
+                                                desc="We analyze your top competitors to find their top-performing keywords and backlink sources, uncovering gaps we can exploit."
+                                                delay={100}
+                                            />
+                                            <ProcessStep 
+                                                number="03" 
+                                                title="Content Production" 
+                                                desc="Our writers produce authoritative, long-form content optimized for both users and search engines, targeting topical relevance."
+                                                delay={200}
+                                            />
+                                            <ProcessStep 
+                                                number="04" 
+                                                title="Link Acquisition" 
+                                                desc="We execute manual outreach campaigns to secure high-authority backlinks, boosting your domain rating and search visibility."
+                                                delay={300}
+                                            />
+                                        </div>
+                                    </ScrollReveal>
+                                </div>
+                                <div className="lg:w-1/2">
+                                    <ScrollReveal delay={200}>
+                                        <div className="bg-slate-900 text-white p-10 rounded-[2.5rem] relative overflow-hidden h-full">
+                                            <div className="absolute top-0 right-0 w-64 h-64 bg-accent-600 rounded-full blur-[100px] opacity-20"></div>
+                                            <h3 className="text-3xl font-bold mb-6 relative z-10">Best-in-Class Toolset</h3>
+                                            <p className="text-slate-400 mb-8 relative z-10">We invest heavily in the industry's leading SEO software to give you a competitive edge.</p>
+                                            
+                                            <div className="flex flex-wrap gap-4 relative z-10">
+                                                <TechStackItem icon={Search} name="Ahrefs" />
+                                                <TechStackItem icon={BarChart} name="SEMrush" />
+                                                <TechStackItem icon={Code} name="Screaming Frog" />
+                                                <TechStackItem icon={FileText} name="Surfer SEO" />
+                                                <TechStackItem icon={Activity} name="Google Search Console" />
+                                                <TechStackItem icon={TrendingUp} name="BrightLocal" />
+                                            </div>
+                                            
+                                            <div className="mt-12 pt-8 border-t border-slate-800 relative z-10">
+                                                <div className="flex items-center gap-4">
+                                                    <div className="text-4xl font-bold text-accent-400">+240%</div>
+                                                    <div className="text-sm text-slate-400">Average Organic Traffic<br/>Growth Year-over-Year</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ScrollReveal>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* FAQ Section */}
+                    <section className="py-24 bg-white">
+                        <div className="container mx-auto px-6 max-w-4xl">
+                            <div className="text-center mb-16">
+                                <ScrollReveal>
+                                    <h2 className="text-3xl md:text-5xl font-display font-bold text-slate-900 mb-6">SEO FAQs</h2>
+                                    <p className="text-slate-500">Common questions about organic growth.</p>
+                                </ScrollReveal>
+                            </div>
+                            <div className="space-y-4">
+                                <FaqItem 
+                                    q="How long does it take to see results from SEO?" 
+                                    a="SEO is a long-term investment. While technical fixes can show results in weeks, significant organic traffic growth and rankings typically take 3 to 6 months of consistent effort, depending on your niche's competitiveness."
+                                    isOpen={openFaqIndex === 0}
+                                    toggle={() => setOpenFaqIndex(openFaqIndex === 0 ? null : 0)}
+                                />
+                                <FaqItem 
+                                    q="Do you guarantee #1 rankings?" 
+                                    a="No reputable agency can guarantee a #1 ranking because Google's algorithm is a black box. However, we guarantee our process: high-quality content, clean code, and legitimate backlinks that historically lead to ranking improvements."
+                                    isOpen={openFaqIndex === 1}
+                                    toggle={() => setOpenFaqIndex(openFaqIndex === 1 ? null : 1)}
+                                />
+                                <FaqItem 
+                                    q="Is content writing included?" 
+                                    a="Yes, depending on your package. We have a team of US-based writers who specialize in creating SEO-optimized content that matches your brand voice and satisfies user intent."
+                                    isOpen={openFaqIndex === 2}
+                                    toggle={() => setOpenFaqIndex(openFaqIndex === 2 ? null : 2)}
+                                />
+                                <FaqItem 
+                                    q="Do you use black hat techniques?" 
+                                    a="Absolutely not. We strictly adhere to Google's Webmaster Guidelines. We focus on 'White Hat' strategies—quality content and genuine outreach—that build sustainable assets and protect your site from penalties."
+                                    isOpen={openFaqIndex === 3}
+                                    toggle={() => setOpenFaqIndex(openFaqIndex === 3 ? null : 3)}
+                                />
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Footer Call to Action */}
+                    <footer id="footer-form" className="bg-[#0B1120] text-white pt-32 pb-12 relative overflow-hidden">
+                        <div className="absolute top-0 left-0 w-full h-[600px] bg-accent-900/20 blur-[150px] pointer-events-none"></div>
+                        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-blue-900/10 blur-[120px] pointer-events-none"></div>
+                        
+                        <div className="container mx-auto px-6 relative z-10">
+                            <div className="flex flex-col lg:flex-row gap-20 lg:gap-32">
+                                <div className="lg:w-5/12 pt-10">
+                                    <ScrollReveal>
+                                        <h2 className="text-5xl md:text-7xl font-display font-bold text-white mb-10 leading-[1.1] tracking-tight">
+                                            Ready to <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-400 to-accent-300">Dominate Search?</span>
+                                        </h2>
+                                        <p className="text-slate-400 text-xl mb-10 leading-relaxed max-w-lg font-light">
+                                            Stop renting your traffic. Start owning it. Let's build your organic growth roadmap.
+                                        </p>
+                                        <div className="flex flex-col gap-4 mb-16">
+                                            <a href="mailto:support@cloudvize.io" className="flex items-center gap-4 text-white hover:text-accent-400 transition-colors group w-fit">
+                                                <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-accent-600 group-hover:border-accent-500 transition-all shrink-0">
+                                                    <Mail size={20} />
+                                                </div>
+                                                <span className="text-lg font-medium">support@cloudvize.io</span>
+                                            </a>
+                                            <a href="tel:+971504447857" className="flex items-center gap-4 text-white hover:text-accent-400 transition-colors group w-fit">
+                                                <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-accent-600 group-hover:border-accent-500 transition-all shrink-0">
+                                                    <Smartphone size={20} />
+                                                </div>
+                                                <span className="text-lg font-medium">+971 50 444 7857</span>
+                                            </a>
+                                            <div className="flex items-center gap-4 text-white hover:text-accent-400 transition-colors group w-fit cursor-default">
+                                                <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-accent-600 group-hover:border-accent-500 transition-all shrink-0">
+                                                    <MapPin size={20} />
+                                                </div>
+                                                <span className="text-lg font-medium leading-snug">Office 1401, Damac Executive Tower Business Bay, Dubai, UAE</span>
+                                            </div>
+                                        </div>
+                                    </ScrollReveal>
+                                </div>
+                                <div className="lg:w-7/12">
+                                    <ScrollReveal delay={200}>
+                                        <div className="glass-panel-dark p-10 md:p-14 rounded-[3rem] shadow-2xl relative overflow-hidden ring-1 ring-white/10">
+                                            <div className="absolute top-0 right-0 p-10 opacity-10">
+                                                <ArrowRight size={100} />
+                                            </div>
+                                            <h3 className="text-3xl font-bold text-white mb-10 relative z-10">Request SEO Audit</h3>
+                                            <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
+                                                <div className="grid md:grid-cols-2 gap-6">
+                                                    <div className="space-y-2"><label className="text-sm font-medium text-slate-400 ml-1">First Name</label><input type="text" name="firstName" onChange={handleChange} placeholder="John" className="w-full px-6 py-5 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-slate-600 focus:bg-white/10 focus:border-accent-500 focus:ring-1 focus:ring-accent-500 outline-none transition-all" /></div>
+                                                    <div className="space-y-2"><label className="text-sm font-medium text-slate-400 ml-1">Last Name</label><input type="text" name="lastName" onChange={handleChange} placeholder="Doe" className="w-full px-6 py-5 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-slate-600 focus:bg-white/10 focus:border-accent-500 focus:ring-1 focus:ring-accent-500 outline-none transition-all" /></div>
+                                                </div>
+                                                <div className="grid md:grid-cols-2 gap-6">
+                                                    <div className="space-y-2"><label className="text-sm font-medium text-slate-400 ml-1">Work Email</label><input type="email" name="email" onChange={handleChange} placeholder="john@company.com" className="w-full px-6 py-5 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-slate-600 focus:bg-white/10 focus:border-accent-500 focus:ring-1 focus:ring-accent-500 outline-none transition-all" /></div>
+                                                    <div className="space-y-2"><label className="text-sm font-medium text-slate-400 ml-1">Company Website</label><input type="url" name="website" onChange={handleChange} placeholder="www.yourcompany.com" className="w-full px-6 py-5 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-slate-600 focus:bg-white/10 focus:border-accent-500 focus:ring-1 focus:ring-accent-500 outline-none transition-all" /></div>
+                                                </div>
+                                                <div className="space-y-2"><label className="text-sm font-medium text-slate-400 ml-1">Message / Description</label><textarea name="message" onChange={handleChange} placeholder="Tell us about your goals..." rows="3" className="w-full px-6 py-5 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-slate-600 focus:bg-white/10 focus:border-accent-500 focus:ring-1 focus:ring-accent-500 outline-none transition-all resize-none"></textarea></div>
+                                                <button type="submit" className="w-full bg-gradient-to-r from-accent-600 to-accent-500 text-white font-bold text-xl py-6 rounded-2xl hover:from-accent-500 hover:to-accent-400 transition-all shadow-lg shadow-accent-900/50 mt-6 hover:-translate-y-1 flex justify-center items-center gap-2 group">
+                                                    Get Free Audit <ArrowRight size={20} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </ScrollReveal>
+                                </div>
+                            </div>
+                            <div className="mt-32 border-t border-white/10 pt-10 flex flex-col md:flex-row justify-between items-center text-sm text-slate-500">
+                                <p>© 2026 CloudVize Agency. All rights reserved.</p>
+                                <div className="flex gap-10 mt-6 md:mt-0"><a href="#" className="hover:text-white transition-colors">Privacy Policy</a><a href="#" className="hover:text-white transition-colors">Terms of Service</a></div>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+    
+    <script src="js/nav.js"></script>
+    <script src="js/form-handler.js"></script>
+
+    <script src="js/whatsapp-widget.js"></script>
+</body>
+</html>

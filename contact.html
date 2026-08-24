@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact CloudVize | Start Your Growth Journey</title>
+    <meta name="description" content="Get in touch with CloudVize. We are ready to engineer your revenue growth with data-driven digital strategies.">
+    
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- Babel -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Manrope & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Manrope', 'sans-serif'],
+                    },
+                    colors: {
+                        accent: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            200: '#ddd6fe',
+                            300: '#c4b5fd',
+                            400: '#a78bfa',
+                            500: '#8b5cf6',
+                            600: '#7c3aed', // Primary
+                            700: '#6d28d9',
+                            800: '#5b21b6',
+                            900: '#4c1d95',
+                            950: '#2e1065',
+                        },
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748B',
+                            600: '#475569',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                            950: '#020617',
+                        }
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #f1f5f9 1px, transparent 1px), linear-gradient(to bottom, #f1f5f9 1px, transparent 1px)",
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'blob': 'blob 7s infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #F8FAFC; 
+            color: #1E293B; 
+            overflow-x: hidden; 
+        }
+        h1, h2, h3, h4, h5 { font-family: 'Manrope', sans-serif; }
+        
+        /* Glass Effect */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+        }
+        .glass-panel-dark {
+             background: rgba(15, 23, 42, 0.6);
+             backdrop-filter: blur(20px);
+             border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Utils */
+        .reveal-hidden { opacity: 0; transform: translateY(30px); filter: blur(4px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .reveal-visible { opacity: 1; transform: translateY(0); filter: blur(0); }
+        .text-gradient { background: linear-gradient(135deg, #0F172A 0%, #7C3AED 50%, #4F46E5 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    </style>
+    <link rel="icon" type="image/png" href="images/favicon.png">
+</head>
+<body class="antialiased">
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        // --- Shared Components ---
+        const useOnScreen = (options) => {
+            const ref = useRef(null);
+            const [visible, setVisible] = useState(false);
+            useEffect(() => {
+                const observer = new IntersectionObserver(([entry]) => {
+                    if (entry.isIntersecting) { setVisible(true); observer.unobserve(entry.target); }
+                }, options);
+                if (ref.current) observer.observe(ref.current);
+                return () => { if (ref.current) observer.unobserve(ref.current); };
+            }, [ref, options]);
+            return [ref, visible];
+        };
+
+        const ScrollReveal = ({ children, delay = 0, className = "" }) => {
+            const [ref, visible] = useOnScreen({ threshold: 0.1 });
+            return (
+                <div ref={ref} className={`reveal-hidden ${visible ? 'reveal-visible' : ''} ${className}`} style={{ transitionDelay: `${delay}ms` }}>
+                    {children}
+                </div>
+            );
+        };
+
+        // --- Icons ---
+        const Icon = ({ path, className, size = 24, strokeWidth = 2 }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" className={className}>{path}</svg>
+        );
+        const ArrowRight = (props) => <Icon {...props} path={<><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></>} />;
+        const ChevronDown = (props) => <Icon {...props} path={<><polyline points="6 9 12 15 18 9"></polyline></>} />;
+        const MapPin = (props) => <Icon {...props} path={<><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></>} />;
+        const Mail = (props) => <Icon {...props} path={<><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></>} />;
+        const Smartphone = (props) => <Icon {...props} path={<><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></>} />;
+        const Send = (props) => <Icon {...props} path={<><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></>} />;
+        const Clock = (props) => <Icon {...props} path={<><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></>} />;
+        const MessageSquare = (props) => <Icon {...props} path={<><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></>} />;
+
+        // Additional icons for the Services dropdown
+        const Search = (props) => <Icon {...props} path={<><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></>} />;
+        const Target = (props) => <Icon {...props} path={<><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></>} />;
+        const Code = (props) => <Icon {...props} path={<><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></>} />;
+        const PenTool = (props) => <Icon {...props} path={<><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></>} />;
+        const PieChart = (props) => <Icon {...props} path={<><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></>} />;
+
+        // --- Cursor Particles (Reused) ---
+        const CursorParticles = () => {
+            const canvasRef = useRef(null);
+            useEffect(() => {
+                const canvas = canvasRef.current;
+                const ctx = canvas.getContext('2d');
+                let animationFrameId;
+                let particles = [];
+                let mouse = { x: null, y: null };
+
+                const resizeCanvas = () => {
+                    canvas.width = canvas.parentElement.offsetWidth;
+                    canvas.height = canvas.parentElement.offsetHeight;
+                };
+                window.addEventListener('resize', resizeCanvas);
+                resizeCanvas();
+
+                class Particle {
+                    constructor() {
+                        this.x = Math.random() * canvas.width;
+                        this.y = Math.random() * canvas.height;
+                        this.vx = (Math.random() - 0.5) * 0.8;
+                        this.vy = (Math.random() - 0.5) * 0.8;
+                        this.size = Math.random() * 3 + 2;
+                        this.color = 'rgba(124, 58, 237, ';
+                    }
+                    update() {
+                        this.x += this.vx; this.y += this.vy;
+                        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+                        if (mouse.x != null) {
+                            let dx = mouse.x - this.x; let dy = mouse.y - this.y;
+                            let distance = Math.sqrt(dx * dx + dy * dy);
+                            if (distance < 150) {
+                                const force = (150 - distance) / 150;
+                                this.vx += (dx / distance) * force * 0.8;
+                                this.vy += (dy / distance) * force * 0.8;
+                            }
+                        }
+                    }
+                    draw() {
+                        ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.fillStyle = this.color + '0.6)'; ctx.fill();
+                    }
+                }
+
+                const initParticles = () => { particles = []; for (let i = 0; i < 40; i++) particles.push(new Particle()); }; // Reduced count to 40
+                initParticles();
+
+                const animate = () => {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    particles.forEach(p => {
+                        p.update(); p.draw();
+                        if (mouse.x != null) {
+                            let dx = mouse.x - p.x; let dy = mouse.y - p.y;
+                            let distance = Math.sqrt(dx*dx + dy*dy);
+                            if (distance < 150) {
+                                ctx.beginPath(); ctx.strokeStyle = `rgba(124, 58, 237, ${0.5 - distance/300})`;
+                                ctx.lineWidth = 1.5; ctx.moveTo(p.x, p.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
+                            }
+                        }
+                    });
+                    animationFrameId = requestAnimationFrame(animate);
+                };
+                animate();
+
+                const handleMouseMove = (e) => {
+                    const rect = canvas.getBoundingClientRect();
+                    mouse.x = e.clientX - rect.left; mouse.y = e.clientY - rect.top;
+                };
+                const handleMouseLeave = () => { mouse.x = null; mouse.y = null; };
+
+                canvas.parentElement.addEventListener('mousemove', handleMouseMove);
+                canvas.parentElement.addEventListener('mouseleave', handleMouseLeave);
+                return () => {
+                    window.removeEventListener('resize', resizeCanvas);
+                    canvas.parentElement.removeEventListener('mousemove', handleMouseMove);
+                    canvas.parentElement.removeEventListener('mouseleave', handleMouseLeave);
+                    cancelAnimationFrame(animationFrameId);
+                };
+            }, []);
+            return <canvas ref={canvasRef} className="absolute inset-0 z-0 pointer-events-none" />;
+        };
+
+        const ContactInfoCard = ({ icon: Icon, title, value, href, delay }) => (
+            <ScrollReveal delay={delay}>
+                <a href={href} className={`block p-6 rounded-2xl bg-white border border-slate-200 hover:border-accent-200 hover:shadow-xl hover:shadow-accent-500/10 transition-all duration-300 group hover:-translate-y-1 ${!href ? 'cursor-default' : ''}`}>
+                    <div className="flex items-start gap-4">
+                        <div className="w-12 h-12 rounded-xl bg-accent-50 flex items-center justify-center text-accent-600 group-hover:bg-accent-600 group-hover:text-white transition-all shadow-sm shrink-0">
+                            <Icon size={22} />
+                        </div>
+                        <div>
+                            <h4 className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-1">{title}</h4>
+                            <p className="text-slate-900 font-bold text-lg leading-snug group-hover:text-accent-600 transition-colors">{value}</p>
+                        </div>
+                    </div>
+                </a>
+            </ScrollReveal>
+        );
+
+        const App = () => {
+            const [scrolled, setScrolled] = useState(false);
+            // state to control the Services dropdown open/close
+            const [servicesOpen, setServicesOpen] = useState(false);
+            const [formData, setFormData] = useState({
+                name: '',
+                email: '',
+                website: '',
+                budget: '',
+                message: ''
+            });
+
+            useEffect(() => {
+                const onScroll = () => setScrolled(window.scrollY > 50);
+                window.addEventListener('scroll', onScroll);
+                return () => window.removeEventListener('scroll', onScroll);
+            }, []);
+
+            const handleSubmit = (e) => {
+                e.preventDefault();
+                // Handle form submission logic here
+                console.log(formData);
+                alert("Thank you! We will get back to you shortly.");
+            };
+
+            const handleChange = (e) => {
+                setFormData({ ...formData, [e.target.name]: e.target.value });
+            };
+
+            return (
+                <div className="min-h-screen bg-slate-50 text-slate-600 font-sans selection:bg-accent-500 selection:text-white">
+                    {/* Navigation */}
+                    <nav className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? 'bg-white/90 backdrop-blur-xl border-b border-slate-200 py-4 shadow-sm' : 'bg-transparent border-transparent py-6'}`}>
+                        <div className="container mx-auto px-6 flex items-center justify-between">
+                            <a href="index.html" className="flex items-center gap-3 group cursor-pointer">
+                                <div className="relative">
+                                    <img src="images/cloudvize logo transparent.png" alt="CloudVize Logo" className="relative h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-sm" />
+                                </div>
+                            </a>
+                            
+                            <div className="hidden md:flex items-center gap-10">
+                                {/* Home link */}
+                                <a href="index.html" className="text-sm font-semibold text-slate-600 hover:text-accent-600 transition-colors">Home</a>
+
+                                {/* Services dropdown with hoverable submenu */}
+                                <div
+                                    className="relative group h-10 flex items-center"
+                                    onMouseEnter={() => setServicesOpen(true)}
+                                    onMouseLeave={() => setServicesOpen(false)}
+                                >
+                                    <a href="services.html" className="flex items-center gap-1.5 text-sm font-semibold text-slate-600 hover:text-accent-600 transition-colors">
+                                        Services <ChevronDown size={14} className={`transition-transform duration-300 ${servicesOpen ? 'rotate-180' : ''}`} />
+                                    </a>
+
+                                    {/* Dropdown panel */}
+                                    <div className={`absolute top-full -left-4 w-72 pt-4 transition-all duration-300 transform origin-top-left ${servicesOpen ? 'opacity-100 translate-y-0 visible scale-100' : 'opacity-0 translate-y-2 invisible scale-95'}`}>
+                                        <div className="glass-panel rounded-2xl p-2 shadow-2xl overflow-hidden bg-white/90 ring-1 ring-slate-900/5">
+                                            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-4 py-3 border-b border-slate-100">Our Expertise</div>
+                                            <div className="p-1">
+                                            {[
+                                                { label: "Paid Advertising", icon: Target, href: "paid-advertising.html" },
+                                                { label: "SEO & Content", icon: Search, href: "seo-content.html" },
+                                                { label: "Web Development", icon: Code, href: "web-development.html" },
+                                                { label: "Creative Studio", icon: PenTool, href: "creative-studio.html" },
+                                                { label: "Email Marketing", icon: Mail, href: "email-marketing.html" },
+                                                { label: "CRO & Analytics", icon: PieChart, href: "cro-analytics.html" }
+                                            ].map((item, i) => (
+                                                <a key={i} href={item.href} className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all group/item hover:bg-slate-50 text-slate-600 hover:text-accent-600">
+                                                    <div className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors shadow-sm bg-slate-50 text-slate-500 group-hover/item:text-accent-600 group-hover/item:bg-accent-50">
+                                                        <item.icon size={16} />
+                                                    </div>
+                                                    {item.label}
+                                                </a>
+                                            ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* About and Contact links */}
+                                <a href="about.html" className="text-sm font-semibold text-slate-600 hover:text-accent-600 transition-colors">About Us</a>
+                                <a href="contact.html" className="text-sm font-semibold text-accent-600 transition-colors">Contact</a>
+                            </div>
+                            
+                            <button onClick={() => document.getElementById('contact-form-section').scrollIntoView({ behavior: 'smooth' })} className="hidden sm:flex items-center gap-2 bg-slate-900 text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-accent-600 transition-all shadow-lg shadow-slate-900/20 hover:shadow-accent-500/30 hover:scale-105 active:scale-95">
+                                Get Growth Plan <ArrowRight size={16} />
+                            </button>
+                        </div>
+                    </nav>
+
+                    {/* Hero Section */}
+                    <section className="relative pt-44 pb-20 overflow-hidden bg-white">
+                        <CursorParticles />
+                        {/* Dynamic Background Elements */}
+                        <div className="absolute top-0 -left-4 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+                        <div className="absolute top-0 -right-4 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+                        <div className="absolute -bottom-8 left-20 w-96 h-96 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
+
+                        {/* Hero Banner Image Background */}
+                        <div className="absolute inset-0 z-0 opacity-50">
+                            <img src="images/herobanner1.png" alt="Hero Background" className="w-full h-full object-cover" />
+                            <div className="absolute inset-0 bg-gradient-to-b from-white via-white/80 to-slate-50"></div>
+                        </div>
+
+                        <div className="absolute inset-0 bg-grid-pattern opacity-[0.4] pointer-events-none z-0"></div>
+                        
+                        <div className="container mx-auto px-6 relative z-10 text-center">
+                            <ScrollReveal>
+                                <div className="inline-flex items-center gap-2 border border-accent-200 bg-accent-50/50 px-5 py-2 rounded-full mb-8 backdrop-blur-md shadow-sm">
+                                    <span className="relative flex h-2.5 w-2.5">
+                                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-400 opacity-75"></span>
+                                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent-500"></span>
+                                    </span>
+                                    <span className="text-xs font-bold text-accent-700 uppercase tracking-widest">Let's Scale Together</span>
+                                </div>
+                                <h1 className="text-5xl md:text-7xl font-display font-bold text-slate-900 mb-8 tracking-tight">
+                                    Start the <span className="text-gradient">Conversation</span>
+                                </h1>
+                                <p className="text-xl text-slate-500 max-w-2xl mx-auto mb-12 font-light leading-relaxed">
+                                    Ready to engineer your next phase of growth? Our strategists are ready to audit your current performance and build a roadmap to higher revenue.
+                                </p>
+                            </ScrollReveal>
+                        </div>
+                    </section>
+
+                    {/* Contact Content Section */}
+                    <section id="contact-form-section" className="pb-32 bg-white relative z-10">
+                        <div className="container mx-auto px-6">
+                            <div className="grid lg:grid-cols-12 gap-12 lg:gap-20">
+                                
+                                {/* Left Side: Info */}
+                                <div className="lg:col-span-5 space-y-8">
+                                    <ScrollReveal>
+                                        <h3 className="text-2xl font-bold text-slate-900 mb-6">Contact Information</h3>
+                                        <div className="space-y-4">
+                                            <ContactInfoCard 
+                                                icon={Mail} 
+                                                title="Email Us" 
+                                                value="support@cloudvize.io" 
+                                                href="mailto:support@cloudvize.io"
+                                                delay={0}
+                                            />
+                                            <ContactInfoCard 
+                                                icon={Smartphone} 
+                                                title="Call Us" 
+                                                value="+971 50 444 7857" 
+                                                href="tel:+971504447857"
+                                                delay={100}
+                                            />
+                                            <ContactInfoCard 
+                                                icon={MapPin} 
+                                                title="Visit HQ" 
+                                                value={<>Office 1401, Damac Executive Tower Business Bay, Dubai, UAE</>}
+                                                href="#"
+                                                delay={200}
+                                            />
+                                        </div>
+                                    </ScrollReveal>
+
+                                    <ScrollReveal delay={300}>
+                                        <div className="p-8 rounded-[2rem] bg-slate-50 border border-slate-100 mt-8">
+                                            <div className="flex items-center gap-4 mb-4">
+                                                <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
+                                                    <Clock size={20} />
+                                                </div>
+                                                <div>
+                                                    <h4 className="font-bold text-slate-900">Response Time</h4>
+                                                    <p className="text-sm text-slate-500">We typically reply within 2 hours during business hours.</p>
+                                                </div>
+                                            </div>
+                                            <div className="flex items-center gap-4">
+                                                <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                                                    <MessageSquare size={20} />
+                                                </div>
+                                                <div>
+                                                    <h4 className="font-bold text-slate-900">Live Chat</h4>
+                                                    <p className="text-sm text-slate-500">Available Mon-Fri, 9am - 6pm EST.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ScrollReveal>
+                                </div>
+
+                                {/* Right Side: Form */}
+                                <div className="lg:col-span-7">
+                                    <ScrollReveal delay={200}>
+                                        <div className="glass-panel p-8 md:p-10 rounded-[2.5rem] shadow-2xl border border-white/60 bg-white/50 backdrop-blur-xl relative overflow-hidden">
+                                            <div className="absolute top-0 right-0 w-64 h-64 bg-accent-50 rounded-bl-full opacity-50 pointer-events-none"></div>
+                                            
+                                            <h3 className="text-3xl font-display font-bold text-slate-900 mb-2 relative z-10">Send a Message</h3>
+                                            <p className="text-slate-500 mb-8 relative z-10">Tell us about your goals. We'll build the plan.</p>
+                                            
+                                            <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
+                                                <div className="grid md:grid-cols-2 gap-6">
+                                                    <div className="space-y-2">
+                                                        <label className="text-sm font-bold text-slate-700 ml-1">Your Name</label>
+                                                        <input 
+                                                            type="text" 
+                                                            name="name"
+                                                            value={formData.name}
+                                                            onChange={handleChange}
+                                                            placeholder="John Doe" 
+                                                            className="w-full px-5 py-4 rounded-xl bg-white border border-slate-200 text-slate-900 placeholder-slate-400 focus:border-accent-500 focus:ring-4 focus:ring-accent-500/10 outline-none transition-all shadow-sm"
+                                                            required
+                                                        />
+                                                    </div>
+                                                    <div className="space-y-2">
+                                                        <label className="text-sm font-bold text-slate-700 ml-1">Work Email</label>
+                                                        <input 
+                                                            type="email" 
+                                                            name="email"
+                                                            value={formData.email}
+                                                            onChange={handleChange}
+                                                            placeholder="john@company.com" 
+                                                            className="w-full px-5 py-4 rounded-xl bg-white border border-slate-200 text-slate-900 placeholder-slate-400 focus:border-accent-500 focus:ring-4 focus:ring-accent-500/10 outline-none transition-all shadow-sm"
+                                                            required
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <div className="grid md:grid-cols-2 gap-6">
+                                                    <div className="space-y-2">
+                                                        <label className="text-sm font-bold text-slate-700 ml-1">Company Website</label>
+                                                        <input 
+                                                            type="url" 
+                                                            name="website"
+                                                            value={formData.website}
+                                                            onChange={handleChange}
+                                                            placeholder="www.yourcompany.com" 
+                                                            className="w-full px-5 py-4 rounded-xl bg-white border border-slate-200 text-slate-900 placeholder-slate-400 focus:border-accent-500 focus:ring-4 focus:ring-accent-500/10 outline-none transition-all shadow-sm"
+                                                        />
+                                                    </div>
+                                                    <div className="space-y-2">
+                                                        <label className="text-sm font-bold text-slate-700 ml-1">Monthly Ad Budget</label>
+                                                        <select 
+                                                            name="budget"
+                                                            value={formData.budget}
+                                                            onChange={handleChange}
+                                                            className="w-full px-5 py-4 rounded-xl bg-white border border-slate-200 text-slate-900 focus:border-accent-500 focus:ring-4 focus:ring-accent-500/10 outline-none transition-all shadow-sm appearance-none cursor-pointer"
+                                                        >
+                                                            <option value="" disabled>Select a range...</option>
+                                                            <option value="Just Starting">Just Starting ($1k - $5k)</option>
+                                                            <option value="Scaling">$5k - $20k</option>
+                                                            <option value="Growth">$20k - $50k</option>
+                                                            <option value="Enterprise">$50k+</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div className="space-y-2">
+                                                    <label className="text-sm font-bold text-slate-700 ml-1">How can we help?</label>
+                                                    <textarea 
+                                                        name="message"
+                                                        value={formData.message}
+                                                        onChange={handleChange}
+                                                        placeholder="Tell us about your challenges and goals..." 
+                                                        rows="4" 
+                                                        className="w-full px-5 py-4 rounded-xl bg-white border border-slate-200 text-slate-900 placeholder-slate-400 focus:border-accent-500 focus:ring-4 focus:ring-accent-500/10 outline-none transition-all shadow-sm resize-none"
+                                                    ></textarea>
+                                                </div>
+
+                                                <button type="submit" className="w-full bg-gradient-to-r from-accent-600 to-indigo-600 text-white font-bold text-xl py-5 rounded-xl hover:from-accent-500 hover:to-indigo-500 transition-all shadow-xl shadow-accent-500/30 flex justify-center items-center gap-2 group hover:-translate-y-1">
+                                                    Send Inquiry <Send size={20} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </ScrollReveal>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Footer */}
+                    <footer id="footer-form" className="bg-[#0B1120] text-white pt-24 pb-12 relative overflow-hidden">
+                        <div className="absolute top-0 left-0 w-full h-[600px] bg-accent-900/20 blur-[150px] pointer-events-none"></div>
+                        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-blue-900/10 blur-[120px] pointer-events-none"></div>
+                        
+                        <div className="container mx-auto px-6 relative z-10">
+                            <div className="flex flex-col md:flex-row justify-between items-center border-t border-white/10 pt-10">
+                                <p className="text-sm text-slate-500">© 2025 CloudVize Agency. All rights reserved.</p>
+                                <div className="flex gap-10 mt-6 md:mt-0 text-sm text-slate-500">
+                                    <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+                                    <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+    
+    <script src="js/nav.js"></script>
+    <script src="js/form-handler.js"></script>
+
+    <script src="js/whatsapp-widget.js"></script>
+</body>
+</html>

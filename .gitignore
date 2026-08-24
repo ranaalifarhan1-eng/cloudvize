@@ -1,0 +1,29 @@
+﻿# Archive files
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+
+# Server & cPanel artifacts
+.well-known/
+cgi-bin/
+
+# Operating System files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+._*
+
+# Editor / IDE artifacts
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs and cache
+*.log
+.cache/
