@@ -4,9 +4,11 @@
   RewriteEngine On
   RewriteBase /
 
-  # 301 Redirect for legacy pro-services root to specific alabama-roofing-marketing landing page
-  RewriteRule ^pro-services/?$ /pro-services/alabama-roofing-marketing/ [R=301,L,QSA]
-  RewriteRule ^pro-services/index\.html$ /pro-services/alabama-roofing-marketing/ [R=301,L,QSA]
+  # 301 Redirect legacy and temporary URLs to final flat landing page
+  RewriteRule ^pro-services/?$ /pro-services/alabama-roofing-marketing.html [R=301,L,QSA]
+  RewriteRule ^pro-services/index\.html$ /pro-services/alabama-roofing-marketing.html [R=301,L,QSA]
+  RewriteRule ^pro-services/alabama-roofing-marketing/?$ /pro-services/alabama-roofing-marketing.html [R=301,L,QSA]
+  RewriteRule ^pro-services/alabama-roofing-marketing/index\.html$ /pro-services/alabama-roofing-marketing.html [R=301,L,QSA]
 </IfModule>
 
 # php -- BEGIN cPanel-generated handler, do not edit
