@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy | CloudVize</title>
+    
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Manrope', 'sans-serif'],
+                    },
+                    colors: {
+                        accent: { 500: '#8b5cf6', 600: '#7c3aed' },
+                        slate: { 900: '#0f172a', 600: '#475569', 500: '#64748B' }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; color: #1E293B; }
+        h1, h2, h3 { font-family: 'Manrope', sans-serif; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const App = () => {
+            return (
+                <div className="min-h-screen">
+                    {/* Simplified Nav */}
+                    <nav className="fixed w-full z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200 py-4">
+                        <div className="container mx-auto px-6 flex justify-between items-center">
+                            <a href="index.html" className="flex items-center gap-3">
+                                <img src="images/cloudvize logo transparent.png" alt="CloudVize" className="h-8 w-auto" />
+                            </a>
+                            <a href="index.html" className="text-sm font-semibold text-slate-600 hover:text-accent-600">Back to Home</a>
+                        </div>
+                    </nav>
+
+                    <main className="pt-32 pb-20 container mx-auto px-6 max-w-4xl">
+                        <div className="glass-panel rounded-[2.5rem] p-10 md:p-16">
+                            <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4 text-center">Privacy Policy</h1>
+                            <p className="text-slate-500 text-center mb-12">Last Updated: May 8, 2026</p>
+
+                            <div className="space-y-10 text-slate-600 leading-relaxed">
+                                <section>
+                                    <h2 className="text-2xl font-bold text-slate-900 mb-4">1. Introduction</h2>
+                                    <p>At CloudVize, we respect your privacy and are committed to protecting your personal data. This policy explains how we handle your information when you use our services or interact with our lead forms.</p>
+                                </section>
+
+                                <section>
+                                    <h2 className="text-2xl font-bold text-slate-900 mb-4">2. Data We Collect</h2>
+                                    <ul className="list-disc ml-6 space-y-2">
+                                        <li>Identity Data: Name, Job Title.</li>
+                                        <li>Contact Data: Email address, Phone number (WhatsApp preferred).</li>
+                                        <li>Business Data: Company name, Website URL, Industry.</li>
+                                        <li>Technical Data: IP address, Browser type, and usage patterns on our site.</li>
+                                    </ul>
+                                </section>
+
+                                <section>
+                                    <h2 className="text-2xl font-bold text-slate-900 mb-4">3. How We Use Your Information</h2>
+                                    <p>We use your data primarily to contact you regarding your business inquiry, schedule strategy audits, and provide tailored marketing and web development services in the UAE and international markets.</p>
+                                </section>
+
+                                <section>
+                                    <h2 className="text-2xl font-bold text-slate-900 mb-4">4. Data Sharing & Security</h2>
+                                    <p>Your data is never sold to third parties. We use secure cloud infrastructure to store your information and only share it with authorized team members to facilitate your growth strategy.</p>
+                                </section>
+
+                                <section className="p-8 bg-accent-50 rounded-2xl border border-accent-100">
+                                    <h2 className="text-xl font-bold text-slate-900 mb-2">Contact Us</h2>
+                                    <p className="mb-4">If you have questions about your data, reach out to our privacy officer:</p>
+                                    <div className="font-semibold text-accent-600">
+                                        Email: support@cloudvize.io<br />
+                                        Address: Office 1401, Damac Executive Tower, Business Bay, Dubai
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </main>
+
+                    <footer className="py-10 border-t border-slate-200 text-center text-sm text-slate-400">
+                        <p>© 2026 CloudVize Agency. All rights reserved.</p>
+                    </footer>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

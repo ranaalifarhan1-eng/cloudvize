@@ -9,6 +9,7 @@ deployment:
     - /bin/cp cro-analytics.html $DEPLOYPATH
     - /bin/cp email-marketing.html $DEPLOYPATH
     - /bin/cp paid-advertising.html $DEPLOYPATH
+    - /bin/cp Privacy-Policy.html $DEPLOYPATH
     - /bin/cp seo-content.html $DEPLOYPATH
     - /bin/cp services.html $DEPLOYPATH
     - /bin/cp web-development.html $DEPLOYPATH
