@@ -550,6 +550,86 @@
       .whatsapp-fab { right: 16px; bottom: 16px; height: 52px; width: 52px; }
     }
 
+    /* ── Scroll-Reveal System ────────────────────────────────── */
+    .reveal-init {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+    }
+
+    .reveal-init.reveal-left {
+      transform: translateX(-20px);
+    }
+
+    .reveal-init.reveal-right {
+      transform: translateX(20px);
+    }
+
+    .reveal-init.reveal-fade {
+      transform: none;
+    }
+
+    .reveal-init.is-revealed {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+
+    .reveal-delay-1 { transition-delay: 70ms; }
+    .reveal-delay-2 { transition-delay: 140ms; }
+    .reveal-delay-3 { transition-delay: 210ms; }
+    .reveal-delay-4 { transition-delay: 280ms; }
+
+    /* Hero Load Animations (non-blocking) */
+    @keyframes heroFadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-anim-1 {
+      animation: heroFadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    .hero-anim-2 {
+      animation: heroFadeUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+    }
+    .hero-anim-visual {
+      animation: heroFadeUp 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
+    }
+
+    /* Mobile adjustments: keep movements vertical and compact to prevent overflow */
+    @media (max-width: 767px) {
+      .reveal-init.reveal-left,
+      .reveal-init.reveal-right {
+        transform: translateY(14px);
+      }
+      .reveal-init {
+        transform: translateY(14px);
+        transition-duration: 0.5s;
+      }
+    }
+
+    /* Accessibility: Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      .reveal-init {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+      .hero-anim-1,
+      .hero-anim-2,
+      .hero-anim-visual {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -647,28 +727,30 @@
     <section class="grid-bg relative overflow-hidden border-b border-slate-200 bg-white py-14 lg:py-20">
       <div class="mx-auto grid max-w-7xl items-center gap-12 px-5 lg:grid-cols-2 lg:px-8">
         <div>
-          <div class="hero-kicker">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v3m0 14v3M2 12h3m14 0h3M6.34 6.34l2.12 2.12m7.08 7.08 2.12 2.12m0-11.32-2.12 2.12m-7.08 7.08-2.12 2.12M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
-            Exclusively for Alabama Roofing Contractors
+          <div class="hero-anim-1">
+            <div class="hero-kicker">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v3m0 14v3M2 12h3m14 0h3M6.34 6.34l2.12 2.12m7.08 7.08 2.12 2.12m0-11.32-2.12 2.12m-7.08 7.08-2.12 2.12M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+              Exclusively for Alabama Roofing Contractors
+            </div>
+            <h1 class="mt-5 max-w-3xl text-4xl font-extrabold tracking-[-.045em] text-slate-950 sm:text-5xl lg:text-[3.7rem] lg:leading-[1.06]">
+              When Alabama homeowners search, be the roofer they <span class="gradient-text">call first.</span>
+            </h1>
+            <p class="mt-5 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">
+              CloudVize helps roofing companies capture high-intent Google searches with focused campaigns, dedicated landing pages, and clear conversion tracking — so your ad spend has a direct path to calls and estimate requests.
+            </p>
           </div>
-          <h1 class="mt-5 max-w-3xl text-4xl font-extrabold tracking-[-.045em] text-slate-950 sm:text-5xl lg:text-[3.7rem] lg:leading-[1.06]">
-            When Alabama homeowners search, be the roofer they <span class="gradient-text">call first.</span>
-          </h1>
-          <p class="mt-5 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">
-            CloudVize helps roofing companies capture high-intent Google searches with focused campaigns, dedicated landing pages, and clear conversion tracking — so your ad spend has a direct path to calls and estimate requests.
-          </p>
-          <div class="mt-8 grid max-w-[650px] grid-cols-1 gap-3 sm:grid-cols-2">
+          <div class="hero-anim-2 mt-8 grid max-w-[650px] grid-cols-1 gap-3 sm:grid-cols-2">
             <a href="#audit" class="cta w-full whitespace-nowrap px-4 sm:px-5">Get Free Google Ads Audit →</a>
             <a href="#results" class="secondary w-full whitespace-nowrap px-4 sm:px-5">See How We Measure Results ↓</a>
           </div>
-          <div class="mt-6 grid max-w-[720px] grid-cols-1 gap-3 text-xs font-bold text-slate-600 sm:grid-cols-3 sm:gap-4">
+          <div class="hero-anim-2 mt-6 grid max-w-[720px] grid-cols-1 gap-3 text-xs font-bold text-slate-600 sm:grid-cols-3 sm:gap-4">
             <span class="flex items-center gap-1.5 whitespace-nowrap"><i class="mini-check not-italic">✓</i> High-Intent Search Campaigns</span>
             <span class="flex items-center gap-1.5 whitespace-nowrap"><i class="mini-check not-italic">✓</i> Dedicated Landing Pages</span>
             <span class="flex items-center gap-1.5 whitespace-nowrap"><i class="mini-check not-italic">✓</i> Lead &amp; Call Tracking</span>
           </div>
         </div>
 
-        <div class="search-stage">
+        <div class="search-stage hero-anim-visual">
           <div class="pulse"></div>
 
           <div class="intent i1">
@@ -780,11 +862,11 @@
     <!-- EXPERIENCE -->
     <section class="bg-slate-50 py-11">
       <div class="mx-auto max-w-7xl px-5 lg:px-8">
-        <div class="mb-7 text-center">
+        <div class="mb-7 text-center reveal-init">
           <p class="text-xs font-extrabold tracking-[.17em] text-slate-400">EXPERIENCE YOU CAN BUILD ON</p>
           <p class="mx-auto mt-2 max-w-2xl text-sm leading-6 text-slate-500">Years of hands-on digital work across websites, paid campaigns and growth-focused projects.</p>
         </div>
-        <div class="surface grid overflow-hidden md:grid-cols-4">
+        <div class="surface grid overflow-hidden md:grid-cols-4 reveal-init">
           <div class="metric"><strong class="gradient-text">Since 2018</strong><span>Digital Growth Experience</span></div>
           <div class="metric border-slate-200 md:border-l"><strong>100+</strong><span>Clients Supported</span></div>
           <div class="metric border-slate-200 md:border-l"><strong>200+</strong><span>Projects Delivered</span></div>
@@ -797,13 +879,13 @@
     <section class="border-y border-slate-200 bg-white py-10 sm:py-12">
       <div class="mx-auto max-w-7xl px-5 lg:px-8">
         <div class="grid items-center gap-7 lg:grid-cols-[0.78fr_2.22fr] lg:gap-10">
-          <div class="lg:pr-3">
+          <div class="lg:pr-3 reveal-init reveal-left">
             <div class="section-label">Measurement Stack</div>
             <h2 class="mt-2 text-2xl font-extrabold tracking-[-.025em] text-slate-950 sm:text-[1.75rem]">One connected setup from search to lead.</h2>
             <p class="mt-3 max-w-xl text-sm leading-6 text-slate-600">Campaign delivery, analytics, tagging and lead attribution work together — so performance is measured beyond clicks.</p>
           </div>
 
-          <div class="overflow-hidden rounded-3xl border border-slate-200 bg-slate-50/70 shadow-[0_20px_55px_-45px_rgba(15,23,42,.55)]">
+          <div class="overflow-hidden rounded-3xl border border-slate-200 bg-slate-50/70 shadow-[0_20px_55px_-45px_rgba(15,23,42,.55)] reveal-init reveal-right">
             <div class="grid sm:grid-cols-2 lg:grid-cols-4 lg:divide-x lg:divide-slate-200">
               <div class="flex items-start gap-3 border-b border-slate-200 p-5 sm:border-r lg:border-b-0 lg:border-r-0">
                 <div class="mt-0.5 grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white shadow-sm ring-1 ring-slate-200">
@@ -869,7 +951,7 @@
     <!-- REAL OPPORTUNITY -->
     <section id="opportunity" class="bg-white py-20">
       <div class="mx-auto grid max-w-7xl items-center gap-12 px-5 lg:grid-cols-2 lg:px-8">
-        <div>
+        <div class="reveal-init reveal-left">
           <div class="section-label">The Real Opportunity</div>
           <h2 class="section-title">Your next roofing customer may already be searching on Google.</h2>
           <p class="section-copy">
@@ -882,7 +964,7 @@
           </div>
         </div>
 
-        <div class="surface p-5 sm:p-7">
+        <div class="surface p-5 sm:p-7 reveal-init reveal-right">
           <div class="rounded-2xl bg-slate-950 p-5 text-white">
             <div class="text-xs font-extrabold uppercase tracking-[.13em] text-purple-300">Example Search Journey</div>
             <div class="mt-5 space-y-3">
@@ -915,14 +997,14 @@
     <!-- SERVICES -->
     <section id="services" class="border-y border-slate-200 bg-slate-50 py-20">
       <div class="mx-auto max-w-7xl px-5 lg:px-8">
-        <div class="mx-auto max-w-3xl text-center">
+        <div class="mx-auto max-w-3xl text-center reveal-init">
           <div class="section-label">One Focused Growth System</div>
           <h2 class="section-title">Everything needed to turn high-intent searches into measurable leads.</h2>
           <p class="section-copy">Instead of separating ads, landing pages and tracking into disconnected services, we build them to work together as one lead-generation system.</p>
         </div>
 
         <div class="mt-12 grid gap-6 lg:grid-cols-3">
-          <article class="service-card">
+          <article class="service-card reveal-init">
             <div class="service-icon">
               <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16M4 12h10M4 19h7"/><path d="M18 15v6m-3-3h6"/></svg>
             </div>
@@ -935,7 +1017,7 @@
             </ul>
           </article>
 
-          <article class="service-card">
+          <article class="service-card reveal-init reveal-delay-1">
             <div class="service-icon">
               <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v5"/></svg>
             </div>
@@ -948,7 +1030,7 @@
             </ul>
           </article>
 
-          <article class="service-card">
+          <article class="service-card reveal-init reveal-delay-2">
             <div class="service-icon">
               <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V9m5 10V5m5 14v-7m5 7V3"/><path d="M3 19h18"/></svg>
             </div>
@@ -962,7 +1044,7 @@
           </article>
         </div>
 
-        <div class="mt-10 dashboard-frame p-3 sm:p-4">
+        <div class="mt-10 dashboard-frame p-3 sm:p-4 reveal-init">
           <!-- REPLACE THIS IMAGE with a real dashboard or reporting screenshot. -->
           <img src="assets/google-ads-campaigns-dashboard.png" alt="Google Ads campaigns dashboard screenshot" class="rounded-xl" />
         </div>
@@ -974,7 +1056,7 @@
     <section id="web-and-ads" class="border-b border-slate-200 bg-white py-20">
       <div class="mx-auto max-w-7xl px-5 lg:px-8">
         <div class="grid items-center gap-12 lg:grid-cols-[0.92fr_1.08fr]">
-          <div>
+          <div class="reveal-init reveal-left">
             <div class="section-label">Web + Ads, Built Together</div>
             <h2 class="section-title">Your Google Ad is only as strong as the page it sends people to.</h2>
             <p class="section-copy">CloudVize combines paid search strategy with conversion-focused web development, so the keyword, ad message and landing-page experience all support the same goal: a qualified call or estimate request.</p>
@@ -1007,7 +1089,7 @@
             </div>
           </div>
 
-          <div class="relative mx-auto w-full max-w-3xl pb-8 sm:pb-10">
+          <div class="relative mx-auto w-full max-w-3xl pb-8 sm:pb-10 reveal-init reveal-right">
             <div class="surface overflow-hidden p-3 sm:p-4">
               <div class="overflow-hidden rounded-[28px] border border-slate-200 bg-gradient-to-br from-white to-slate-50">
                 <img src="assets/web-ads-roofing-mockup.png" alt="Roofing landing page shown on a laptop with a Google search ad visible on a mobile phone" class="block w-full h-auto" />
@@ -1026,17 +1108,17 @@
         </div>
 
         <div class="mt-14 grid overflow-hidden rounded-3xl border border-slate-200 bg-slate-950 text-white md:grid-cols-3">
-          <div class="p-6 md:border-r md:border-white/10">
+          <div class="p-6 md:border-r md:border-white/10 reveal-init">
             <div class="text-xs font-extrabold uppercase tracking-[.12em] text-violet-300">Hands-on experience</div>
             <div class="mt-2 text-xl font-extrabold">Since 2018</div>
             <p class="mt-2 text-sm leading-6 text-slate-300">Digital marketing and web-development work across real service-business projects.</p>
           </div>
-          <div class="border-t border-white/10 p-6 md:border-r md:border-t-0">
+          <div class="border-t border-white/10 p-6 md:border-r md:border-t-0 reveal-init reveal-delay-1">
             <div class="text-xs font-extrabold uppercase tracking-[.12em] text-violet-300">One connected team</div>
             <div class="mt-2 text-xl font-extrabold">Ads + Web + Tracking</div>
             <p class="mt-2 text-sm leading-6 text-slate-300">No separate vendors passing responsibility when the lead journey breaks.</p>
           </div>
-          <div class="border-t border-white/10 p-6 md:border-t-0">
+          <div class="border-t border-white/10 p-6 md:border-t-0 reveal-init reveal-delay-2">
             <div class="text-xs font-extrabold uppercase tracking-[.12em] text-violet-300">Built for accountability</div>
             <div class="mt-2 text-xl font-extrabold">Calls &amp; enquiries first</div>
             <p class="mt-2 text-sm leading-6 text-slate-300">We measure the actions that matter to a roofing business — not traffic for traffic's sake.</p>
@@ -1048,14 +1130,14 @@
     <!-- REAL RESULTS -->
     <section id="results" class="bg-white py-20">
       <div class="mx-auto max-w-7xl px-5 lg:px-8">
-        <div class="mx-auto max-w-3xl text-center">
+        <div class="mx-auto max-w-3xl text-center reveal-init">
           <div class="section-label">Campaign Proof</div>
           <h2 class="section-title">Show the numbers that matter — with real campaign evidence.</h2>
           <p class="section-copy">A look at the kind of reporting view a live campaign produces — spend, conversions and cost per lead, all in one place.</p>
         </div>
 
         <div class="surface mt-12 grid gap-0 overflow-hidden lg:grid-cols-12">
-          <div class="border-b border-slate-200 p-6 sm:p-8 lg:col-span-7 lg:border-b-0 lg:border-r">
+          <div class="border-b border-slate-200 p-6 sm:p-8 lg:col-span-7 lg:border-b-0 lg:border-r reveal-init reveal-left">
             <div class="section-label">Featured Google Ads Result</div>
             <h3 class="mt-2 text-2xl font-extrabold tracking-tight text-slate-950">Campaign performance snapshot</h3>
             <p class="mt-3 max-w-2xl text-sm leading-6 text-slate-600">Spend, conversions and cost per lead — the core numbers we track to keep a campaign accountable to real results.</p>
@@ -1066,7 +1148,7 @@
             </div>
           </div>
 
-          <div class="p-6 sm:p-8 lg:col-span-5">
+          <div class="p-6 sm:p-8 lg:col-span-5 reveal-init reveal-right">
             <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
               <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
                 <div class="text-xs font-bold uppercase tracking-wider text-slate-400">Ad Spend</div>
@@ -1101,13 +1183,13 @@
     <!-- CLIENT REVIEWS -->
     <section id="reviews" class="bg-white py-20">
       <div class="mx-auto max-w-7xl px-5 lg:px-8">
-        <div class="mx-auto max-w-3xl text-center">
+        <div class="mx-auto max-w-3xl text-center reveal-init">
           <div class="section-label">What Roofing Contractors Say</div>
           <h2 class="section-title">Trusted by contractors who need real calls, not just clicks.</h2>
           <p class="section-copy">Feedback from roofing businesses on how CloudVize campaigns and landing pages perform for their service area.</p>
         </div>
 
-        <div class="relative mt-12">
+        <div class="relative mt-12 reveal-init">
           <button id="testi-prev" type="button" aria-label="Previous reviews" class="slider-arrow left-0 -translate-x-3 sm:-translate-x-5">
             <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 18l-6-6 6-6"/></svg>
           </button>
@@ -1274,7 +1356,7 @@
     <section class="border-y border-slate-200 bg-slate-50 py-20">
       <div class="mx-auto max-w-7xl px-5 lg:px-8">
         <div class="grid items-start gap-12 lg:grid-cols-[.9fr_1.1fr]">
-          <div>
+          <div class="reveal-init reveal-left">
             <div class="section-label">Why CloudVize</div>
             <h2 class="section-title">One team. One strategy. No gap between the ad and the page.</h2>
             <p class="section-copy">Roofing leads are rarely lost because of one isolated problem. They are lost when targeting, messaging, website experience and tracking do not work together. CloudVize treats those pieces as one system.</p>
@@ -1286,28 +1368,28 @@
           </div>
 
           <div class="grid gap-4 sm:grid-cols-2">
-            <div class="surface p-5">
+            <div class="surface p-5 reveal-init">
               <div class="grid h-10 w-10 place-items-center rounded-xl bg-violet-100 text-violet-700">
                 <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v14H4z"/><path d="M4 9h16"/></svg>
               </div>
               <h3 class="mt-4 text-base font-extrabold">Web development that supports the campaign</h3>
               <p class="mt-2 text-sm leading-6 text-slate-600">Landing pages and service-business websites are built around trust, mobile usability and a clear conversion path.</p>
             </div>
-            <div class="surface p-5">
+            <div class="surface p-5 reveal-init reveal-delay-1">
               <div class="grid h-10 w-10 place-items-center rounded-xl bg-violet-100 text-violet-700">
                 <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V9m5 10V5m5 14v-7m5 7V3"/><path d="M3 19h18"/></svg>
               </div>
               <h3 class="mt-4 text-base font-extrabold">Google Ads managed around lead quality</h3>
               <p class="mt-2 text-sm leading-6 text-slate-600">Search terms, location targeting and budgets are reviewed against the enquiries they actually produce.</p>
             </div>
-            <div class="surface p-5">
+            <div class="surface p-5 reveal-init reveal-delay-2">
               <div class="grid h-10 w-10 place-items-center rounded-xl bg-violet-100 text-violet-700">
                 <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="m18 14-6-6-6 6"/></svg>
               </div>
               <h3 class="mt-4 text-base font-extrabold">Tracking built in, not bolted on later</h3>
               <p class="mt-2 text-sm leading-6 text-slate-600">Calls, forms and conversion events are part of the setup so campaign decisions can be tied back to real inquiries.</p>
             </div>
-            <div class="surface p-5">
+            <div class="surface p-5 reveal-init reveal-delay-3">
               <div class="grid h-10 w-10 place-items-center rounded-xl bg-violet-100 text-violet-700">
                 <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
               </div>
@@ -1317,7 +1399,7 @@
           </div>
         </div>
 
-        <div class="mt-10 flex flex-col items-start justify-between gap-5 rounded-3xl bg-slate-950 p-6 text-white sm:flex-row sm:items-center sm:p-7">
+        <div class="mt-10 flex flex-col items-start justify-between gap-5 rounded-3xl bg-slate-950 p-6 text-white sm:flex-row sm:items-center sm:p-7 reveal-init">
           <div>
             <div class="text-xs font-extrabold uppercase tracking-[.13em] text-violet-300">Before you spend more on clicks</div>
             <div class="mt-2 text-xl font-extrabold sm:text-2xl">See where your campaign, landing page or tracking may be leaking leads.</div>
@@ -1330,16 +1412,16 @@
     <!-- PROCESS -->
     <section id="process" class="bg-white py-20">
       <div class="mx-auto max-w-7xl px-5 lg:px-8">
-        <div class="mx-auto max-w-3xl text-center">
+        <div class="mx-auto max-w-3xl text-center reveal-init">
           <div class="section-label">How It Works</div>
           <h2 class="section-title">A simple process from market audit to ongoing optimization.</h2>
         </div>
 
         <div class="mt-12 grid gap-x-10 gap-y-9 md:grid-cols-2">
-          <div class="process-step"><div class="process-number">01</div><h3 class="text-lg font-extrabold">Audit Your Market</h3><p class="mt-2 text-sm leading-6 text-slate-600">Review your current account, service areas, key roofing services and high-intent search opportunities.</p></div>
-          <div class="process-step"><div class="process-number">02</div><h3 class="text-lg font-extrabold">Build Campaign & Landing Page</h3><p class="mt-2 text-sm leading-6 text-slate-600">Create a focused campaign structure and a conversion path aligned with the searches you want to capture.</p></div>
-          <div class="process-step"><div class="process-number">03</div><h3 class="text-lg font-extrabold">Launch & Track</h3><p class="mt-2 text-sm leading-6 text-slate-600">Connect call and form tracking so the campaign can be measured beyond impressions and clicks.</p></div>
-          <div class="process-step"><div class="process-number">04</div><h3 class="text-lg font-extrabold">Optimize Based on Real Leads</h3><p class="mt-2 text-sm leading-6 text-slate-600">Use search terms, conversion quality and cost data to refine targeting, keywords and landing-page decisions.</p></div>
+          <div class="process-step reveal-init"><div class="process-number">01</div><h3 class="text-lg font-extrabold">Audit Your Market</h3><p class="mt-2 text-sm leading-6 text-slate-600">Review your current account, service areas, key roofing services and high-intent search opportunities.</p></div>
+          <div class="process-step reveal-init reveal-delay-1"><div class="process-number">02</div><h3 class="text-lg font-extrabold">Build Campaign & Landing Page</h3><p class="mt-2 text-sm leading-6 text-slate-600">Create a focused campaign structure and a conversion path aligned with the searches you want to capture.</p></div>
+          <div class="process-step reveal-init reveal-delay-2"><div class="process-number">03</div><h3 class="text-lg font-extrabold">Launch & Track</h3><p class="mt-2 text-sm leading-6 text-slate-600">Connect call and form tracking so the campaign can be measured beyond impressions and clicks.</p></div>
+          <div class="process-step reveal-init reveal-delay-3"><div class="process-number">04</div><h3 class="text-lg font-extrabold">Optimize Based on Real Leads</h3><p class="mt-2 text-sm leading-6 text-slate-600">Use search terms, conversion quality and cost data to refine targeting, keywords and landing-page decisions.</p></div>
         </div>
       </div>
     </section>
@@ -1347,14 +1429,14 @@
     <!-- ALABAMA MARKET SNAPSHOT -->
     <section class="border-y border-slate-200 bg-slate-50 py-16">
       <div class="mx-auto max-w-7xl px-5 lg:px-8">
-        <div class="text-center">
+        <div class="text-center reveal-init">
           <div class="section-label">Alabama Market Snapshot</div>
           <h2 class="mt-2 text-2xl font-extrabold tracking-tight text-slate-950 sm:text-3xl">Established roofing brands across Alabama markets.</h2>
           <p class="mx-auto mt-3 max-w-3xl text-sm leading-6 text-slate-600">A look at roofing brands serving Birmingham, Huntsville, Montgomery, Mobile, and Tuscaloosa / Northport.</p>
           <p class="mx-auto mt-2 max-w-3xl text-[11px] leading-5 text-slate-400">Market examples only — logos are shown for local-market context and are not presented as CloudVize client endorsements.</p>
         </div>
         <div class="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
-          <div class="rounded-3xl border border-slate-200 bg-white p-5 text-center shadow-sm shadow-slate-200/60 transition hover:-translate-y-0.5 hover:shadow-md">
+          <div class="rounded-3xl border border-slate-200 bg-white p-5 text-center shadow-sm shadow-slate-200/60 transition hover:-translate-y-0.5 hover:shadow-md reveal-init">
             <div class="flex h-20 items-center justify-center rounded-2xl bg-slate-50 px-4 py-3">
               <img src="https://bestchoiceroofing.com/wp-content/uploads/2022/05/Black-and-Red-with-TM%40300x.png" alt="Best Choice Roofing logo" class="max-h-14 w-auto max-w-full object-contain" loading="lazy" decoding="async">
             </div>
@@ -1365,7 +1447,7 @@
             </div>
           </div>
 
-          <div class="rounded-3xl border border-slate-200 bg-white p-5 text-center shadow-sm shadow-slate-200/60 transition hover:-translate-y-0.5 hover:shadow-md">
+          <div class="rounded-3xl border border-slate-200 bg-white p-5 text-center shadow-sm shadow-slate-200/60 transition hover:-translate-y-0.5 hover:shadow-md reveal-init reveal-delay-1">
             <div class="flex h-20 items-center justify-center overflow-hidden rounded-2xl bg-slate-50 px-2 py-2">
               <img src="https://d126ytvel6227q.cloudfront.net/logos/usa-roofing-and-gutters-llc-587298.jpg" alt="USA Roofing &amp; Gutters logo" class="max-h-16 w-auto max-w-full scale-[1.18] object-contain mix-blend-multiply" loading="lazy" decoding="async">
             </div>
@@ -1376,7 +1458,7 @@
             </div>
           </div>
 
-          <div class="rounded-3xl border border-slate-200 bg-white p-5 text-center shadow-sm shadow-slate-200/60 transition hover:-translate-y-0.5 hover:shadow-md">
+          <div class="rounded-3xl border border-slate-200 bg-white p-5 text-center shadow-sm shadow-slate-200/60 transition hover:-translate-y-0.5 hover:shadow-md reveal-init reveal-delay-2">
             <div class="flex h-20 items-center justify-center rounded-2xl bg-slate-50 px-4 py-3">
               <img src="https://iroofpros.com/wp-content/uploads/2022/11/iroof-sign-footer.png" alt="IRoof logo" class="max-h-14 w-auto max-w-full object-contain" loading="lazy" decoding="async">
             </div>
@@ -1387,7 +1469,7 @@
             </div>
           </div>
 
-          <div class="rounded-3xl border border-slate-200 bg-white p-5 text-center shadow-sm shadow-slate-200/60 transition hover:-translate-y-0.5 hover:shadow-md">
+          <div class="rounded-3xl border border-slate-200 bg-white p-5 text-center shadow-sm shadow-slate-200/60 transition hover:-translate-y-0.5 hover:shadow-md reveal-init reveal-delay-3">
             <div class="flex h-20 items-center justify-center rounded-2xl bg-slate-50 px-4 py-3">
               <img src="https://roofingmobilealabama.com/wp-content/uploads/2025/08/Roofing-Mobile-Alabama-mc-logo-300x70.png" alt="Roofing Mobile Alabama / Mobile Roofing &amp; Construction logo" class="max-h-14 w-auto max-w-full object-contain" loading="lazy" decoding="async">
             </div>
@@ -1398,7 +1480,7 @@
             </div>
           </div>
 
-          <div class="rounded-3xl border border-slate-200 bg-white p-5 text-center shadow-sm shadow-slate-200/60 transition hover:-translate-y-0.5 hover:shadow-md sm:col-span-2 xl:col-span-1">
+          <div class="rounded-3xl border border-slate-200 bg-white p-5 text-center shadow-sm shadow-slate-200/60 transition hover:-translate-y-0.5 hover:shadow-md sm:col-span-2 xl:col-span-1 reveal-init reveal-delay-4">
             <div class="flex h-20 items-center justify-center rounded-2xl bg-slate-900 px-4 py-2">
               <img src="https://cdn.hibuwebsites.com/229941437f2142fca7638b5dc1fc08f7/dms3rep/multi/roofing-alabama-logo.png?dm-skip-opt=true" alt="Roofing Alabama, LLC logo" class="max-h-16 w-auto max-w-full object-contain" loading="lazy" decoding="async">
             </div>
@@ -1415,12 +1497,12 @@
     <!-- FAQ -->
     <section id="faq" class="bg-white py-20">
       <div class="mx-auto max-w-4xl px-5 lg:px-8">
-        <div class="text-center">
+        <div class="text-center reveal-init">
           <div class="section-label">Clear Answers</div>
           <h2 class="section-title">Frequently asked questions</h2>
         </div>
 
-        <div class="mt-10 space-y-3">
+        <div class="mt-10 space-y-3 reveal-init">
           <div class="faq-item surface overflow-hidden">
             <button class="faq-btn flex w-full items-center justify-between gap-4 p-5 text-left sm:p-6"><span class="font-extrabold">What Google Ads budget should a roofing company start with?</span><span class="faq-plus text-2xl font-light text-purple-600">+</span></button>
             <div class="faq-content border-t border-slate-100 px-5 pb-6 pt-4 text-sm leading-6 text-slate-600 sm:px-6">There is no single budget that fits every market. We look at your service area, competition, search demand and target services before recommending a starting range.</div>
@@ -1453,7 +1535,7 @@
     <section id="audit" class="border-t border-slate-200 bg-slate-950 py-20 text-white">
       <div class="mx-auto max-w-7xl px-5 lg:px-8">
         <div class="grid items-center gap-10 lg:grid-cols-2">
-          <div>
+          <div class="reveal-init reveal-left">
             <div class="eyebrow border-purple-400/30 bg-purple-400/10 text-purple-200">Free Google Ads Audit</div>
             <h2 class="mt-5 text-3xl font-extrabold tracking-[-.035em] sm:text-4xl">See where your roofing campaign can improve before spending more.</h2>
             <p class="mt-4 max-w-xl text-base leading-7 text-slate-300">Share your details and CloudVize can review your market, current advertising setup and conversion path. Keep the first step simple — budget and deeper qualification can be discussed later.</p>
@@ -1464,7 +1546,7 @@
             </div>
           </div>
 
-          <form id="audit-form" class="rounded-3xl bg-white p-6 text-slate-950 shadow-2xl sm:p-8">
+          <form id="audit-form" class="rounded-3xl bg-white p-6 text-slate-950 shadow-2xl sm:p-8 reveal-init reveal-right">
             <h3 class="text-xl font-extrabold">Request Your Free Audit</h3>
             <p class="mt-2 text-sm leading-6 text-slate-500">Four quick fields. No long questionnaire.</p>
 
@@ -1793,6 +1875,41 @@
       renderDots();
       goTo(0);
       start();
+    })();
+
+    // Subtle Native Scroll-Reveal via IntersectionObserver
+    (function () {
+      const revealElements = document.querySelectorAll('.reveal-init');
+      if (!revealElements.length) return;
+
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+        revealElements.forEach(el => el.classList.add('is-revealed'));
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, {
+        root: null,
+        rootMargin: '0px 0px -40px 0px',
+        threshold: 0.1
+      });
+
+      revealElements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        // If element is already in the viewport on load/refresh, reveal immediately
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          el.classList.add('is-revealed');
+        } else {
+          observer.observe(el);
+        }
+      });
     })();
 
   </script>
