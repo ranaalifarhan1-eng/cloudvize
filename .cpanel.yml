@@ -1,5 +1,18 @@
-﻿---
+---
 deployment:
   tasks:
     - export DEPLOYPATH=/home/globalho/public_html/
-    - /bin/rsync -av --exclude='.git*' --exclude='.cpanel.yml' ./ $DEPLOYPATH
+    - /bin/cp index.html $DEPLOYPATH
+    - /bin/cp about.html $DEPLOYPATH
+    - /bin/cp contact.html $DEPLOYPATH
+    - /bin/cp creative-studio.html $DEPLOYPATH
+    - /bin/cp cro-analytics.html $DEPLOYPATH
+    - /bin/cp email-marketing.html $DEPLOYPATH
+    - /bin/cp paid-advertising.html $DEPLOYPATH
+    - /bin/cp seo-content.html $DEPLOYPATH
+    - /bin/cp services.html $DEPLOYPATH
+    - /bin/cp web-development.html $DEPLOYPATH
+    - /bin/cp .htaccess $DEPLOYPATH
+    - /bin/cp -R images $DEPLOYPATH
+    - /bin/cp -R js $DEPLOYPATH
+    - /bin/cp -R pro-services $DEPLOYPATH
