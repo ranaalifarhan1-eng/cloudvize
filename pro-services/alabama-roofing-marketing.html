@@ -282,31 +282,54 @@
       box-shadow: 0 16px 40px -24px rgba(109, 40, 217, 0.55);
     }
 
-    .intent {
+    .hero-floating-card {
       position: absolute;
       z-index: 20;
-      min-width: 205px;
-      padding: 12px 16px;
-      border: 1px solid #ddd6fe;
+      width: 250px;
+      padding: 13px 15px;
+      border: 1px solid rgba(226, 232, 240, 0.95);
       border-radius: 18px;
       background: rgba(255, 255, 255, 0.96);
-      box-shadow: 0 20px 45px -20px rgba(76, 29, 149, 0.42);
-      backdrop-filter: blur(10px);
-      transition: transform 0.2s ease, border-color 0.2s ease;
+      box-shadow: 0 20px 40px -18px rgba(15, 23, 42, 0.16), 0 0 0 1px rgba(255, 255, 255, 0.85) inset;
+      backdrop-filter: blur(12px);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
     }
-    .intent:hover { transform: scale(1.05); border-color: #7c3aed; }
-    .intent b { display: block; font: 800 13px/1.2 'Manrope', sans-serif; color: #0f172a; }
-    .intent small { display: inline-flex; margin-top: 4px; padding: 3px 8px; border-radius: 999px; font-weight: 800; font-size: 10px; }
+    .hero-floating-card:hover {
+      transform: translateY(-3px);
+      border-color: #c4b5fd;
+      box-shadow: 0 24px 48px -18px rgba(109, 40, 217, 0.22);
+    }
+    .hero-floating-card .card-title {
+      font-family: 'Manrope', sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.25;
+      color: #0f172a;
+    }
+    .hero-floating-card .card-desc {
+      margin-top: 4px;
+      font-size: 11px;
+      line-height: 1.45;
+      color: #64748b;
+    }
+    .hero-floating-card .card-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 9.5px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
 
-    .i1 { left: -20px; top: 55px; animation: floatAnim1 5s ease-in-out infinite; }
-    .i2 { right: -20px; top: 135px; animation: floatAnim2 6s ease-in-out infinite; }
-    .i3 { left: -25px; bottom: 78px; animation: floatAnim3 5.5s ease-in-out infinite; }
-    .i4 { right: -25px; bottom: 38px; animation: floatAnim4 6.5s ease-in-out infinite; }
+    .hero-card-1 { left: -36px; top: 48px; animation: floatAnim1 6s ease-in-out infinite; }
+    .hero-card-2 { right: -36px; top: 155px; animation: floatAnim2 7s ease-in-out infinite; }
+    .hero-card-3 { left: -36px; bottom: 55px; animation: floatAnim3 6.5s ease-in-out infinite; }
 
-    @keyframes floatAnim1 { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
-    @keyframes floatAnim2 { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
-    @keyframes floatAnim3 { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-7px); } }
-    @keyframes floatAnim4 { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-9px); } }
+    @keyframes floatAnim1 { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-7px); } }
+    @keyframes floatAnim2 { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
+    @keyframes floatAnim3 { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-6px); } }
 
     .dashboard-frame {
       overflow: hidden;
@@ -364,7 +387,7 @@
     .faq-plus { transition: transform .2s ease; }
 
     @media (max-width: 1023px) {
-      .intent { display: none; }
+      .hero-floating-card { display: none; }
     }
     @media (max-width: 767px) {
       .hero-visual { margin-top: .5rem; }
@@ -633,6 +656,10 @@
         opacity: 1 !important;
         transform: none !important;
       }
+      .hero-floating-card {
+        animation: none !important;
+        transition: none !important;
+      }
     }
 
   </style>
@@ -758,24 +785,34 @@
         <div class="search-stage hero-anim-visual">
           <div class="pulse"></div>
 
-          <div class="intent i1">
-            <b>Roof Repair Near Me</b>
-            <small class="bg-red-50 text-red-600">Urgent Search</small>
+          <!-- Hero Floating Card 1: High-Intent Roofing Leads -->
+          <div class="hero-floating-card hero-card-1">
+            <div class="card-badge text-violet-700">
+              <span class="h-1.5 w-1.5 rounded-full bg-violet-600"></span>
+              High-Intent Search
+            </div>
+            <div class="card-title">High-Intent Roofing Leads</div>
+            <p class="card-desc">Capture homeowners already searching for roofing services.</p>
           </div>
 
-          <div class="intent i2">
-            <b>Roof Replacement Birmingham</b>
-            <small class="bg-blue-50 text-blue-700">High-Value Intent</small>
+          <!-- Hero Floating Card 2: Clear Conversion Path -->
+          <div class="hero-floating-card hero-card-2">
+            <div class="card-badge text-emerald-700">
+              <span class="h-1.5 w-1.5 rounded-full bg-emerald-600"></span>
+              Search → Ad → Lead
+            </div>
+            <div class="card-title">Clear Conversion Path</div>
+            <p class="card-desc">Google Ads, landing page, and estimate requests aligned.</p>
           </div>
 
-          <div class="intent i3">
-            <b>Storm Damage Roofer</b>
-            <small class="bg-amber-50 text-amber-700">Ready to Contact</small>
-          </div>
-
-          <div class="intent i4">
-            <b>Metal Roofing Contractor</b>
-            <small class="bg-emerald-50 text-emerald-700">Local Buyer</small>
+          <!-- Hero Floating Card 3: Direct WhatsApp Support -->
+          <div class="hero-floating-card hero-card-3">
+            <div class="card-badge text-emerald-700">
+              <svg viewBox="0 0 32 32" class="h-2.5 w-2.5 fill-current" aria-hidden="true"><path d="M16.02 3C9.4 3 4 8.38 4 15c0 2.4.7 4.63 1.9 6.5L4 29l7.7-1.86A11.9 11.9 0 0 0 16.02 27C22.63 27 28 21.62 28 15S22.63 3 16.02 3Zm0 21.7c-2 0-3.87-.56-5.47-1.53l-.39-.23-4.57 1.1 1.13-4.46-.26-.4A9.6 9.6 0 0 1 6.3 15c0-5.36 4.35-9.7 9.72-9.7 5.36 0 9.7 4.34 9.7 9.7s-4.34 9.7-9.7 9.7Zm5.34-7.28c-.29-.15-1.73-.86-2-.96-.27-.1-.46-.15-.66.14-.2.29-.76.96-.93 1.16-.17.2-.34.22-.63.07-.29-.14-1.22-.45-2.32-1.43-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.2-.29.29-.48.1-.2.05-.36-.02-.5-.07-.15-.66-1.58-.9-2.17-.24-.57-.48-.49-.66-.5h-.56c-.2 0-.5.07-.77.36s-1.02 1-1.02 2.45 1.05 2.85 1.19 3.05c.15.2 2.07 3.16 5.02 4.43.7.3 1.25.48 1.68.62.7.22 1.34.19 1.84.12.56-.08 1.73-.71 1.97-1.39.24-.68.24-1.27.17-1.39-.07-.12-.26-.2-.55-.34Z"/></svg>
+              Direct Support
+            </div>
+            <div class="card-title">Direct WhatsApp Support</div>
+            <p class="card-desc">Quick answers when you need campaign help.</p>
           </div>
 
           <div class="phone">
@@ -1549,6 +1586,15 @@
             </div>
 
             <button type="submit" class="cta mt-5 w-full">Request My Free Google Ads Audit →</button>
+            <div class="mt-4 pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+              <p class="text-xs text-slate-500">Prefer to talk first? Chat with us directly on WhatsApp.</p>
+              <a href="https://wa.me/12055550199?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20a%20Google%20Ads%20audit%20for%20my%20roofing%20business." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 rounded-xl border border-emerald-200 bg-emerald-50/80 px-3.5 py-2 text-xs font-bold text-emerald-800 transition hover:bg-emerald-100 shrink-0">
+                <svg viewBox="0 0 32 32" class="h-3.5 w-3.5 fill-emerald-600" aria-hidden="true">
+                  <path d="M16.02 3C9.4 3 4 8.38 4 15c0 2.4.7 4.63 1.9 6.5L4 29l7.7-1.86A11.9 11.9 0 0 0 16.02 27C22.63 27 28 21.62 28 15S22.63 3 16.02 3Zm0 21.7c-2 0-3.87-.56-5.47-1.53l-.39-.23-4.57 1.1 1.13-4.46-.26-.4A9.6 9.6 0 0 1 6.3 15c0-5.36 4.35-9.7 9.72-9.7 5.36 0 9.7 4.34 9.7 9.7s-4.34 9.7-9.7 9.7Zm5.34-7.28c-.29-.15-1.73-.86-2-.96-.27-.1-.46-.15-.66.14-.2.29-.76.96-.93 1.16-.17.2-.34.22-.63.07-.29-.14-1.22-.45-2.32-1.43-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.2-.29.29-.48.1-.2.05-.36-.02-.5-.07-.15-.66-1.58-.9-2.17-.24-.57-.48-.49-.66-.5h-.56c-.2 0-.5.07-.77.36s-1.02 1-1.02 2.45 1.05 2.85 1.19 3.05c.15.2 2.07 3.16 5.02 4.43.7.3 1.25.48 1.68.62.7.22 1.34.19 1.84.12.56-.08 1.73-.71 1.97-1.39.24-.68.24-1.27.17-1.39-.07-.12-.26-.2-.55-.34Z"/>
+                </svg>
+                Chat on WhatsApp
+              </a>
+            </div>
             <p class="mt-3 text-center text-[11px] leading-5 text-slate-400">Replace this demo form action with your actual CRM, email, webhook or lead form integration before launch.</p>
           </form>
         </div>
@@ -1586,8 +1632,14 @@
 
         <button type="submit" class="popup-cta mt-3.5">Get My Free Audit <span aria-hidden="true">→</span></button>
 
-        <div class="mt-2.5 flex items-center justify-center gap-1.5 text-[9.5px] font-semibold text-slate-400">
-          <span class="text-emerald-500">✓</span> No obligation, no spam
+        <div class="mt-3 pt-3 border-t border-slate-100 text-center">
+          <p class="text-[11px] text-slate-500">Prefer to talk first? Chat with us directly on WhatsApp.</p>
+          <a href="https://wa.me/12055550199?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20a%20Google%20Ads%20audit%20for%20my%20roofing%20business." target="_blank" rel="noopener noreferrer" class="mt-1.5 inline-flex items-center justify-center gap-1.5 text-[11.5px] font-bold text-emerald-700 hover:text-emerald-800 hover:underline">
+            <svg viewBox="0 0 32 32" class="h-3.5 w-3.5 fill-current" aria-hidden="true">
+              <path d="M16.02 3C9.4 3 4 8.38 4 15c0 2.4.7 4.63 1.9 6.5L4 29l7.7-1.86A11.9 11.9 0 0 0 16.02 27C22.63 27 28 21.62 28 15S22.63 3 16.02 3Zm0 21.7c-2 0-3.87-.56-5.47-1.53l-.39-.23-4.57 1.1 1.13-4.46-.26-.4A9.6 9.6 0 0 1 6.3 15c0-5.36 4.35-9.7 9.72-9.7 5.36 0 9.7 4.34 9.7 9.7s-4.34 9.7-9.7 9.7Zm5.34-7.28c-.29-.15-1.73-.86-2-.96-.27-.1-.46-.15-.66.14-.2.29-.76.96-.93 1.16-.17.2-.34.22-.63.07-.29-.14-1.22-.45-2.32-1.43-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.2-.29.29-.48.1-.2.05-.36-.02-.5-.07-.15-.66-1.58-.9-2.17-.24-.57-.48-.49-.66-.5h-.56c-.2 0-.5.07-.77.36s-1.02 1-1.02 2.45 1.05 2.85 1.19 3.05c.15.2 2.07 3.16 5.02 4.43.7.3 1.25.48 1.68.62.7.22 1.34.19 1.84.12.56-.08 1.73-.71 1.97-1.39.24-.68.24-1.27.17-1.39-.07-.12-.26-.2-.55-.34Z"/>
+            </svg>
+            Chat on WhatsApp
+          </a>
         </div>
       </form>
     </div>
